@@ -1,0 +1,15 @@
+%rule html
+  %render-before <!DOCTYPE html>\
+<html>
+  %render-after </html>
+
+  %escape & &amp;
+  %escape < &lt;
+  %escape > &gt;
+  %escape \ &nbsp;
+  %escape \
+            <br />
+  %indent "  "
+
+%include html/head.paradoc
+%include html/body.paradoc

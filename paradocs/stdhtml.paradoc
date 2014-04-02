@@ -1,0 +1,7 @@
+%include stdhtml/inline.paradoc
+%include stdhtml/block.paradoc
+%include stdhtml/html.paradoc
+
+%rule
+
+  %def = %html%body%sect1%h1

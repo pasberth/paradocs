@@ -1,0 +1,26 @@
+%rule html body
+  %render-before \
+<body>
+  %render-after </body>
+  %indent "  "
+  %def = %sect1%h1
+
+%rule html body sect1
+  %extend block
+  %render-before \
+<div class=\"sect1\">
+  %render-after </div>
+  %indent "  "
+
+%rule html body sect1 h1
+  %render-before \
+<h1>\
+  %render-after </h1>
+  %indent "  "
+
+%rule html body sect1 paragraph
+  %extend inline
+  %render-before \
+<p>\
+  %render-after </p>
+  %indent "  "

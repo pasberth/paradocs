@@ -1,0 +1,27 @@
+%rule html head
+  %render-before \
+<head>
+  %render-after </head>
+  %indent "  "
+
+%rule html head linkcss
+  %render-before \
+  %def [ %begin
+  %def ] %end
+
+%rule html head linkcss begin
+  %render-before <link rel=\"stylesheet\" href=\"
+  %render-after \"\ />
+
+%rule html head linkcss end
+
+%rule html head linkscript
+  %render-before \
+  %def [ %begin
+  %def ] %end
+
+%rule html head linkscript begin
+  %render-before <script src=\"
+  %render-after \"></script>
+
+%rule html head linkscript end

@@ -1,0 +1,36 @@
+%rule inline
+  %def * %strong
+  %def _ %em
+  %def + %code
+  %def ^ %sup
+  %def ~ %sub
+
+%rule inline strong
+  %extend inline
+  %render-before <strong>
+  %render-after </strong>
+  %def * %..
+
+%rule inline em
+  %extend inline
+  %render-before <em>
+  %render-after </em>
+  %def _ %..
+
+%rule inline code
+  %extend inline
+  %render-before <code>
+  %render-after </code>
+  %def + %..
+
+%rule inline sup
+  %extend inline
+  %render-before <sup>
+  %render-after </sup>
+  %def ^ %..
+
+%rule inline sub
+  %extend inline
+  %render-before <sub>
+  %render-after </sub>
+  %def ~ %..
