@@ -1,0 +1,11 @@
+%include ../paradocs/stdhtml.paradoc
+
+= Inline markup examples
+
+%ul
+- *bold*
+- _italic_
+- +monospace+
+- ^superscript^
+- ~subscript~
+- *_bold italic_*
