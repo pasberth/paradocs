@@ -1,0 +1,33 @@
+name:           paradocs
+version:        1.0.0
+cabal-Version:  >= 1.2
+build-type:     Simple
+license:        MIT
+license-file:   LICENSE
+copyright:      Copyright (C) 2014 Pasberth
+homepage:       https://github.com/pasberth/paradocs
+bug-reports:    https://github.com/pasberth/paradocs/issues
+author:         Pasberth
+maintainer:     Pasberth <pasberth@gmail.com>
+stability:      experimental
+synopsis:       Yet another lightweight markup language
+description:
+  TODO
+
+category:       Tools
+
+Executable paradocs
+  main-is:        Paradocs.hs
+  ghc-options:    -Wall -O2
+  build-depends:
+    base,
+    mtl,
+    lens,
+    control-monad-loop,
+    unordered-containers,
+    split,
+    utf8-string,
+    trifecta,
+    filepath,
+    directory,
+    ansi-wl-pprint
