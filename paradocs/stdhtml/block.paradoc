@@ -1,3 +1,4 @@
 %rule block
 
+%include block/ul.paradoc
 %include block/table.paradoc
