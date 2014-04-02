@@ -1,0 +1,19 @@
+%include ../paradocs/stdhtml.paradoc
+%include ../paradocs/jquery.paradoc
+%include ../paradocs/highlightjs.paradoc
+
+%html
+%head
+%jquery
+%highlightjs
+%haskell
+%github.css
+
+%body
+
+= Syntax highlighting examples
+
+%code-block%haskell"""
+main :: IO ()
+main = putStrLn "hello world"
+"""
