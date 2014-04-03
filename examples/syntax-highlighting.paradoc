@@ -1,6 +1,6 @@
-%include ../paradocs/stdhtml.paradoc
-%include ../paradocs/jquery.paradoc
-%include ../paradocs/highlightjs.paradoc
+%include ../lib/stdhtml.paradoc
+%include ../lib/jquery.paradoc
+%include ../lib/highlightjs.paradoc
 
 %html
 %head

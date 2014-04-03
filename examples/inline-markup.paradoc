@@ -1,4 +1,4 @@
-%include ../paradocs/stdhtml.paradoc
+%include ../lib/stdhtml.paradoc
 
 = Inline markup examples
 
