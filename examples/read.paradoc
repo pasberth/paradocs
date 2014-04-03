@@ -1,0 +1,6 @@
+%include ../lib/stdhtml.paradoc
+
+= Read example
+
+Here's the source code of this page.\
+%read read.paradoc
