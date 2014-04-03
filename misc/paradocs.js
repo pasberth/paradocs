@@ -2,6 +2,16 @@ hljs.registerLanguage("paradocs", function(hljs) {
   return {
     c: [
       {
+        cN: 'string',
+        v: [
+          { b: '\\\\.?' },
+          { b: '""""', e: '""""' },
+          { b: '"""', e: '"""' },
+          { b: '""', e: '""' },
+          { b: '"', e: '"' },
+        ]
+      },
+      {
         cN: "keyword",
         v: [
           { b: "%rule" },
@@ -13,15 +23,6 @@ hljs.registerLanguage("paradocs", function(hljs) {
           { b: "%indent" },
           { b: "%include" },
           { b: "%read" },
-        ]
-      },
-      {
-        cN: 'string',
-        v: [
-          { b: '""""', e: '""""' },
-          { b: '"""', e: '"""' },
-          { b: '""', e: '""' },
-          { b: '"', e: '"' },
         ]
       },
       {

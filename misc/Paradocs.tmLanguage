@@ -12,6 +12,44 @@
 	<array>
 		<dict>
 			<key>match</key>
+			<string>\\.?</string>
+			<key>name</key>
+			<string>string.source.paradocs</string>
+		</dict>
+		<dict>
+			<key>begin</key>
+			<string>""""</string>
+			<key>end</key>
+			<string>""""</string>
+			<key>name</key>
+			<string>string.source.paradocs</string>
+		</dict>
+		<dict>
+			<key>begin</key>
+			<string>"""</string>
+			<key>end</key>
+			<string>"""</string>
+			<key>name</key>
+			<string>string.source.paradocs</string>
+		</dict>
+		<dict>
+			<key>begin</key>
+			<string>""</string>
+			<key>end</key>
+			<string>""</string>
+			<key>name</key>
+			<string>string.source.paradocs</string>
+		</dict>
+		<dict>
+			<key>begin</key>
+			<string>"</string>
+			<key>end</key>
+			<string>"</string>
+			<key>name</key>
+			<string>string.source.paradocs</string>
+		</dict>
+		<dict>
+			<key>match</key>
 			<string>%rule</string>
 			<key>name</key>
 			<string>keyword.source.paradocs</string>
@@ -69,38 +107,6 @@
 			<string>%[^"%\s]+</string>
 			<key>name</key>
 			<string>keyword.source.paradocs</string>
-		</dict>
-		<dict>
-			<key>begin</key>
-			<string>""""</string>
-			<key>end</key>
-			<string>""""</string>
-			<key>name</key>
-			<string>string.source.paradocs</string>
-		</dict>
-		<dict>
-			<key>begin</key>
-			<string>"""</string>
-			<key>end</key>
-			<string>"""</string>
-			<key>name</key>
-			<string>string.source.paradocs</string>
-		</dict>
-		<dict>
-			<key>begin</key>
-			<string>""</string>
-			<key>end</key>
-			<string>""</string>
-			<key>name</key>
-			<string>string.source.paradocs</string>
-		</dict>
-		<dict>
-			<key>begin</key>
-			<string>"</string>
-			<key>end</key>
-			<string>"</string>
-			<key>name</key>
-			<string>string.source.paradocs</string>
 		</dict>
 	</array>
 	<key>scopeName</key>
