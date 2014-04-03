@@ -20,6 +20,7 @@
   %indent "  "
 
 %rule block table thead tr th
+  %extend inline
   %render-before \
 <th>
   %render-after </th>
@@ -42,6 +43,7 @@
   %indent "  "
 
 %rule block table tbody tr td
+  %extend inline
   %render-before \
 <td>
   %render-after </td>
