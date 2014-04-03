@@ -27,7 +27,7 @@
 
 %rule html head linkscript end
 
-%rule html head head style
+%rule html head style
   %render-before """
 
 <style type="text/css"></style>
