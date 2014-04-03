@@ -1,9 +1,8 @@
 {-# LANGUAGE OverloadedStrings          #-}
-{-# LANGUAGE MultiWayIf                 #-}
 {-# LANGUAGE LambdaCase                 #-}
-{-# LANGUAGE GeneralizedNewtypeDeriving #-}
-{-# LANGUAGE TemplateHaskell            #-}
 {-# LANGUAGE NamedFieldPuns             #-}
+
+module Main where
 
 import           Control.Arrow
 import           Control.Applicative
@@ -18,7 +17,6 @@ import qualified Data.List.Split                as Split
 import qualified Data.Maybe                     as Maybe
 import qualified Data.HashMap.Strict            as HashMap
 import qualified Data.HashSet                   as HashSet
-import qualified Data.Char                      as Char
 import qualified Data.ByteString.UTF8           as ByteString
 import qualified Text.Trifecta                  as Trifecta
 import qualified Text.Trifecta.Delta            as TrifectaDelta
@@ -28,85 +26,9 @@ import qualified System.Directory               as Directory
 import qualified System.FilePath.Posix          as FilePath
 import qualified System.Environment             as Environment
 import qualified Text.PrettyPrint.ANSI.Leijen   as Leijen
-
-data Token
-  = Word            -- /\S+/
-    { tokenAsStr    :: String
-    , line          :: String
-    , pos           :: TrifectaDelta.Delta
-    }
-  | Quote           -- /\\./, /".*?"/
-    { tokenAsStr    :: String
-    , line          :: String
-    , pos           :: TrifectaDelta.Delta
-    }
-  | MultiQuote      -- /(""+).*?\1/m
-    { tokenAsStr    :: String
-    , line          :: String
-    , pos           :: TrifectaDelta.Delta
-    }
-  | Space
-    { tokenAsStr    :: String
-    , line          :: String
-    , pos           :: TrifectaDelta.Delta
-    }
-  | LineBreak
-    { tokenAsStr    :: String
-    , line          :: String
-    , pos           :: TrifectaDelta.Delta
-    }
-  | ChangeRule      -- /%\S+/
-    { tokenAsStr    :: String
-    , line          :: String
-    , pos           :: TrifectaDelta.Delta
-    }
-  | Bad
-    { tokenAsStr    :: String
-    , line          :: String
-    , pos           :: TrifectaDelta.Delta
-    , errMsg        :: String
-    }
-  deriving (Show)
-
-data Instr
-  = DefRule                 -- %rule rule-token_1 rule-token_2 ... rule-token_n
-  | DefExtend               -- %extend rule-token_1 rule-token_2 ... rule-token_n
-  | DefMacro                -- %def identifier-token replacement-token_1 replacement-token_2 ... replacement-token_n
-  | DefEscape               -- %escape identifier-token replacement-token_1 replacement-token_2 ... replacement-token_n
-  | DefRenderBefore         -- %render-before render-token_1 render-token_2 ... render-token_n
-  | DefRenderAfter          -- %render-after render-token_1 render-token_2 ... render-token_n
-  | DefIndent               -- %indent indent-token_1 indent-token_2 ... indent-token_n
-  | Include                 -- %include file-path-token_1 file-path-token_2 ... file-path-token_n
-  deriving (Show)
-
-data Stat
-  = Paragraph [Token]
-  | Instr Instr [Token]
-  deriving (Show)
-
-data AST = Document [Stat]
-  deriving (Show)
-
-data RenderedText
-  = RenderedLine String
-  deriving (Show)
-
-type Rendered = [RenderedText]
-
-type MacroMap = HashMap.HashMap String [Token]
-
-type EscapeMap = HashMap.HashMap Char String
-
-data Rule
-  = Rule
-    { ruleMacroMap      :: MacroMap
-    , ruleAncestors     :: [AbsoluteRuleName]
-    , ruleEscapeMap     :: EscapeMap
-    , ruleRenderBefore  :: String
-    , ruleRenderAfter   :: String
-    , ruleIndent        :: String
-    }
-    deriving (Show)
+import           Types
+import           Util
+import           Parser
 
 emptyRule :: Rule
 emptyRule = Rule
@@ -128,280 +50,8 @@ emptyRendererState = RendererState
                      , _defRuleName = []
                      }
 
-type RelativeRuleName = String
-type AbsoluteRuleName = [RelativeRuleName]
-
-type RuleMap = HashMap.HashMap AbsoluteRuleName Rule
-
-data StackValue
-  = StackValue
-    { stackWorkingRuleName :: AbsoluteRuleName
-    , stackRendered :: Rendered
-    }
-
-type Stack = [StackValue]
-
-data RendererState
-  = RendererState
-    { _code :: AST
-    , _rendered :: Rendered
-    , _stack :: Stack
-    , _ruleMap :: RuleMap
-    , _workingRuleName :: AbsoluteRuleName
-    , _defRuleName :: AbsoluteRuleName
-    }
-makeLenses ''RendererState
-
-newtype Renderer a
-  = Renderer
-    {
-      unRenderer :: StateT RendererState IO a
-    }
-  deriving (Functor
-            , Applicative
-            , Monad
-            , MonadState RendererState
-            , MonadIO
-            )
-
-data ParserState
-  = ParserState
-
-newtype Parser a
-  = Parser
-    {
-      unParser :: StateT ParserState Trifecta.Parser a
-    }
-  deriving (Functor
-            , Applicative
-            , Alternative
-            , Monad
-            , MonadPlus
-            , MonadState ParserState
-            , Trifecta.Parsing
-            , Trifecta.DeltaParsing
-            , Trifecta.CharParsing
-            , Trifecta.TokenParsing
-            )
-
-runParser :: Parser a -> ParserState -> Trifecta.Parser a
-runParser = evalStateT . unParser
-
 runRenderer :: Renderer a -> RendererState -> IO a
 runRenderer = evalStateT . unRenderer
-
-reservedNames :: [String]
-reservedNames = [ "rule"
-                , "extend"
-                , "def"
-                , "escape"
-                , "render-before"
-                , "render-after"
-                , "indent"
-                , "include"
-                ]
-
-parseSingleton :: Parser a -> Parser [a]
-parseSingleton p = do { x <- p ; return [x] }
-
-backslashQuote :: Parser Token
-backslashQuote = do
-  line <- Trifecta.line
-  pos <- Trifecta.position
-  _ <- Trifecta.char '\\'
-  ch <- Trifecta.anyChar
-  return $ Quote { tokenAsStr = ['\\', ch]
-                  , line = ByteString.toString line
-                  , pos = pos
-                  }
-
-multiDoubleQuote :: Parser Token
-multiDoubleQuote = do
-    line <- Trifecta.line
-    pos <- Trifecta.position
-    beginMarkParts1 <- Trifecta.string "\"\""
-    beginMarkParts2 <- many (Trifecta.char '"')
-    _ <- optional (Trifecta.char '\n')
-    let beginMark = beginMarkParts1 ++ beginMarkParts2
-    optional (Trifecta.try (parseContents beginMark)) >>= \case
-      Just contents -> return $ MultiQuote { tokenAsStr = beginMark ++ contents ++ beginMark
-                                        , line = ByteString.toString line
-                                        , pos = pos }
-      Nothing -> do
-        contents <- Trifecta.many (Trifecta.anyChar)
-        return $ Bad
-                { tokenAsStr = beginMark ++ contents
-                , line = ByteString.toString line
-                , pos = pos
-                , errMsg = "unexpected EOF while looking for matching `" ++ beginMark ++ "'"
-                }
-  where
-    parseContents :: String -> Parser String
-    parseContents beginMark = do
-      contents <- many (Trifecta.notChar '"')
-      maybeEndMark <- Trifecta.some (Trifecta.char '"')
-      if beginMark == maybeEndMark
-        then return contents
-        else do
-          contents2 <- parseContents beginMark
-          return $ contents ++ maybeEndMark ++ contents2
-
-singleDoubleQuote :: Parser Token
-singleDoubleQuote = do
-    line <- Trifecta.line
-    pos <- Trifecta.position
-    _ <- Trifecta.char '"'
-    contents <- join <$> many (Trifecta.string "\\\"" <|> parseSingleton (Trifecta.noneOf "\"\n"))
-    optional (Trifecta.char '"') >>= \case
-      Just _ -> return $ Quote { tokenAsStr = ('"':contents) ++ "\""
-                                , line = ByteString.toString line
-                                , pos = pos
-                                }
-      Nothing -> do
-        return $ Bad
-                { tokenAsStr = '"':contents
-                , line = ByteString.toString line
-                , pos = pos
-                , errMsg = "missing terminating `\"' character"
-                }
-
-changeRule :: Parser Token
-changeRule = Trifecta.try $ do
-  line <- Trifecta.line
-  pos <- Trifecta.position
-  _ <- Trifecta.char '%'
-  optional wordAsString >>= \case
-    Just name -> do
-      if
-        | name `elem` reservedNames
-          -> Trifecta.unexpected ('%' : name)
-        | otherwise
-          -> return $ ChangeRule { tokenAsStr = '%' : name, line = ByteString.toString line, pos = pos }
-    Nothing -> do
-      return $ Bad { tokenAsStr = "%"
-                    , line = ByteString.toString line
-                    , pos = pos
-                    , errMsg = "there is not a token after `%'"
-                    }
-
-wordAsString :: Parser String
-wordAsString = some (Trifecta.satisfy (\case
-                                        '%' -> False
-                                        '\\' -> False
-                                        '"' -> False
-                                        x -> not (Char.isSpace x)))
-
-wordAsToken :: Parser Token
-wordAsToken = do
-  line <- Trifecta.line
-  pos <- Trifecta.position
-  s <- wordAsString
-  return $ Word { tokenAsStr = s, line = ByteString.toString line, pos = pos }
-
-token :: Parser Token
-token = backslashQuote <|> multiDoubleQuote <|> singleDoubleQuote <|> changeRule <|> wordAsToken
-
-space :: Parser Token
-space = do
-  line <- Trifecta.line
-  pos <- Trifecta.position
-  s <- Trifecta.satisfy (\case
-                          '\n' -> False
-                          ch -> Char.isSpace ch)
-  return $ Space { tokenAsStr = [s], line = ByteString.toString line, pos = pos }
-
-newline :: Parser Token
-newline = do
-  line <- Trifecta.line
-  pos <- Trifecta.position
-  s <- Trifecta.char '\n'
-  return $ LineBreak { tokenAsStr = [s], line = ByteString.toString line, pos = pos }
-
-spacesInParagraph :: Parser [Token]
-spacesInParagraph = do
-  sp1 <- many space
-  nl <- Maybe.maybeToList <$> optional newline
-  sp2 <- many space
-
-  return $ join [sp1, nl, sp2]
-
-paragraph :: Parser Stat
-paragraph = do
-  tokens_ <- join <$> some ((++) <$> parseSingleton token <*> spacesInParagraph)
-  let tokens = reverse (dropWhile isSpace (reverse tokens_))
-  return $ Paragraph tokens
-
-instr :: Parser Stat
-instr = go where
-  go = do
-    pos <- Trifecta.position
-    line <- Trifecta.line
-    _ <- Trifecta.char '%'
-
-    instrName <- optional wordAsString
-
-    case instrName of
-      Just name -> do
-        _ <- spacesInParagraph
-        tokens_ <- join <$> many ((++) <$> parseSingleton token <*> spacesInParagraph)
-        let tokens = reverse (dropWhile isSpace (reverse tokens_))
-
-        let instrNameAsToken = Word { tokenAsStr = '%':name, pos = pos, line = ByteString.toString line }
-        case name of
-          "rule" -> return $ Instr DefRule (instrNameAsToken : map (verifyToken "%rule") tokens)
-          "extend" -> return $ Instr DefExtend (instrNameAsToken : map (verifyToken "%extend") tokens)
-          "def" -> return $ Instr DefMacro (instrNameAsToken : verifyDefMacroTokens tokens)
-          "escape" -> return $ Instr DefEscape (instrNameAsToken : verifyDefEscapeTokens tokens)
-          "render-before" -> return $ Instr DefRenderBefore (instrNameAsToken : map (verifyToken "%render-before") tokens)
-          "render-after" -> return $ Instr DefRenderAfter (instrNameAsToken : map (verifyToken "%render-after") tokens)
-          "indent" -> return $ Instr DefIndent (instrNameAsToken : map (verifyToken "%indent") tokens)
-          "include" -> return $ Instr Include (instrNameAsToken : map (verifyToken "%include") tokens)
-          _ -> Trifecta.unexpected ('%':name)
-      Nothing -> Trifecta.unexpected "%"
-
-  verifyToken :: String -> Token -> Token
-  verifyToken _ tk@(Word {}) = tk
-  verifyToken _ tk@(Quote {}) = tk
-  verifyToken rule (ChangeRule {tokenAsStr, line, pos})
-        = Bad { tokenAsStr = tokenAsStr
-                , line = line
-                , pos = pos
-                , errMsg = "`" ++ rule ++ "' can't contain `" ++ tokenAsStr ++ "'"
-                }
-  verifyToken _ tk = tk
-
-  verifyDefMacroTokens :: [Token] -> [Token]
-  verifyDefMacroTokens [] = []
-  verifyDefMacroTokens (token1:tokens) = verifyToken "%def" token1 : tokens
-
-  verifyDefEscapeTokens :: [Token] -> [Token]
-  verifyDefEscapeTokens [] = []
-  verifyDefEscapeTokens (token1:tokens) = verifyDefEscapeToken token1 : map (verifyToken "%escape") tokens
-
-  verifyDefEscapeToken :: Token -> Token
-  verifyDefEscapeToken tk@(Word {tokenAsStr, line, pos})
-        | length tokenAsStr == 1 = tk
-        | otherwise = Bad { tokenAsStr = tokenAsStr
-                            , line = line
-                            , pos = pos
-                            , errMsg = "a character expected but got " ++ show (length tokenAsStr) ++ " characters"
-                            }
-  verifyDefEscapeToken tk@(Quote {tokenAsStr, line, pos})
-        | length (unquote tokenAsStr) == 1 = tk
-        | otherwise = Bad { tokenAsStr = tokenAsStr
-                            , line = line
-                            , pos = pos
-                            , errMsg = "a character expected but got " ++ show (length (unquote tokenAsStr)) ++ " characters"
-                            }
-  verifyDefEscapeToken tk
-        = Bad { tokenAsStr = tokenAsStr tk
-                , line = line tk
-                , pos = pos tk
-                , errMsg = "a character expected but got `" ++ tokenAsStr tk ++ "'"
-                }
-
-document :: Parser AST
-document = Document <$> many (Trifecta.spaces *> (paragraph <|> instr))
 
 docDelta :: TrifectaDelta.Delta -> Leijen.Doc
 docDelta (TrifectaDelta.Directed path lineno columnno _ _) = do
@@ -786,12 +436,6 @@ renderedTextToString (RenderedLine line) = reverse ('\n':line)
 renderedToString :: Rendered -> String
 renderedToString = map renderedTextToString >>> reverse >>> join
 
-unquote :: String -> String
-unquote ('\\':x:xs) = x : unquote xs
-unquote ('"':xs)    = unquote xs
-unquote (x:xs)      = x : unquote xs
-unquote []          = []
-
 unquoteMulti :: String -> String
 unquoteMulti = dropWhile (=='"') >>> reverse >>> dropWhile (=='"') >>> reverse
 
@@ -812,15 +456,6 @@ tokenToString (LineBreak {tokenAsStr}) = tokenAsStr
 
 concatTokens :: [Token] -> String
 concatTokens = map tokenToString >>> join
-
-isSpace :: Token -> Bool
-isSpace (Space {}) = True
-isSpace (LineBreak {}) = True
-isSpace (Word {}) = False
-isSpace (Quote {}) = False
-isSpace (MultiQuote {}) = False
-isSpace (ChangeRule {}) = False
-isSpace (Bad {}) = False
 
 tokensToAbsoluteRuleName :: [Token] -> AbsoluteRuleName
 tokensToAbsoluteRuleName tokens = reverse (reversedRec tokens) where

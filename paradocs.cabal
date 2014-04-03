@@ -16,8 +16,9 @@ description:
 
 category:       Tools
 
-Executable paradocs
-  main-is:        src/Main.hs
+executable paradocs
+  hs-source-dirs: src
+  main-is:        Main.hs
   ghc-options:    -Wall -O2
   build-depends:
     base,
