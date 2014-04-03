@@ -30,7 +30,7 @@
 %rule html head style
   %render-before """
 
-<style type="text/css"></style>
+<style type="text/css">
 """
 
   %render-after </style>
