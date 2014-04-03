@@ -29,4 +29,7 @@
   %render-before """<code class="haskell language-haskell">"""
   %render-after </code>
 
-%rule html head highlightjs
+%rule block pre paradocs
+
+  %render-before """<code class="paradocs langugae-paradocs">"""
+  %render-after </code>
