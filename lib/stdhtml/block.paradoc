@@ -3,3 +3,4 @@
 
 %include block/ul.paradoc
 %include block/table.paradoc
+%include block/pre.paradoc

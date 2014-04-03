@@ -9,7 +9,7 @@
   %escape > &gt;
   %escape \  &nbsp;
   %escape \
-            <br />
+            <br />\
   %indent "  "
 
 %include html/head.paradoc

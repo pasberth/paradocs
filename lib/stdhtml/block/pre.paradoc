@@ -1,0 +1,6 @@
+%rule block pre
+  %render-before <pre>
+  %render-after </pre>
+
+  %escape \
+             &#10;

@@ -6,10 +6,7 @@
   %render-after """
 
 <script type="text/javascript">
-  hljs.configure({useBR: true});
-  $(document).ready(function() {
-    $('code.highlight').each(function(i, e) {hljs.highlightBlock(e)});
-  });
+  hljs.initHighlightingOnLoad();
 </script>"""
 
 %rule html head highlightjs haskell
@@ -28,12 +25,8 @@
 
 <link rel="stylesheet" href="http://yandex.st/highlightjs/8.0/styles/github.min.css">"""
 
-%rule block code-block
-
-%rule block code-block haskell
-  %render-before """
-
-<code class="highlight haskell language-haskell">"""
+%rule block pre haskell
+  %render-before """<code class="haskell language-haskell">"""
   %render-after </code>
 
 %rule html head highlightjs
