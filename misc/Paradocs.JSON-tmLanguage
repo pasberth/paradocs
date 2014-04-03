@@ -1,0 +1,67 @@
+{ "name": "Paradocs",
+  "scopeName": "source.paradocs",
+  "fileTypes": ["paradoc"],
+  "patterns": [
+    {
+      "match": "%rule",
+      "name": "keyword.source.paradocs"
+    },
+    {
+      "match": "%extend",
+      "name": "keyword.source.paradocs"
+    },
+    {
+      "match": "%def",
+      "name": "keyword.source.paradocs"
+    },
+    {
+      "match": "%escape",
+      "name": "keyword.source.paradocs"
+    },
+    {
+      "match": "%render-before",
+      "name": "keyword.source.paradocs"
+    },
+    {
+      "match": "%render-after",
+      "name": "keyword.source.paradocs"
+    },
+    {
+      "match": "%indent",
+      "name": "keyword.source.paradocs"
+    },
+    {
+      "match": "%include",
+      "name": "keyword.source.paradocs"
+    },
+    {
+      "match": "%read",
+      "name": "keyword.source.paradocs"
+    },
+    {
+      "match": "%[^\"%\\s]+",
+      "name": "keyword.source.paradocs"
+    },
+    {
+      "begin": "\"\"\"\"",
+      "end": "\"\"\"\"",
+      "name": "string.source.paradocs"
+    },
+    {
+      "begin": "\"\"\"",
+      "end": "\"\"\"",
+      "name": "string.source.paradocs"
+    },
+    {
+      "begin": "\"\"",
+      "end": "\"\"",
+      "name": "string.source.paradocs"
+    },
+    {
+      "begin": "\"",
+      "end": "\"",
+      "name": "string.source.paradocs"
+    }
+  ],
+  "uuid": "3101d065-5b5b-4eb9-901f-e42882d644bb"
+}
