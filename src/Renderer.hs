@@ -11,6 +11,7 @@ import qualified Data.Maybe                     as Maybe
 import qualified Data.List                      as List
 import qualified Data.List.Split                as Split
 import qualified Data.HashMap.Strict            as HashMap
+import qualified Data.Char                      as Char
 import qualified Data.ByteString.UTF8           as ByteString
 import qualified Text.Trifecta                  as Trifecta
 import qualified Text.Trifecta.Delta            as TrifectaDelta
@@ -115,8 +116,12 @@ closeWorkingRule = do
                           False -> return ()
         appendString (reverse first)
         forM_ rest $ \(RenderedLine line) -> do
-          appendLine
-          appendString (linePrefix ++ reverse line)
+          let stripped = dropWhile Char.isSpace line
+          if null stripped
+            then return ()
+            else do
+              appendLine
+              appendString (linePrefix ++ reverse stripped)
 
   case Split.splitOn "\n" ruleRenderAfter of
     [] -> return ()
@@ -196,6 +201,8 @@ renderToken (LineBreak {tokenAsStr}) = do
 
 renderToken instrName@(Read { tokenAsStr, line, pos }) = do
   use code >>= \case
+    -- TODO: 
+    -- Document []
     Document (Paragraph tokens_:rest) -> do
       let tokens = dropWhile isSpace tokens_
       let filePath = concatTokens $ takeWhile (not . isSpace) tokens
@@ -229,6 +236,9 @@ renderToken tk@(ChangeRule { tokenAsStr, line, pos }) = do
             Leijen.hPutDoc System.stderr (Leijen.bold (Leijen.string ("not in scope `" ++ relativeRuleName ++ "'")))
             Leijen.hPutDoc System.stderr Leijen.linebreak
             Leijen.hPutDoc System.stderr (docHintLine tk)
+  code %= \case
+            Document (Paragraph tokens:rest) -> Document (Paragraph (dropWhile isSpace tokens):rest)
+            Document [] -> Document []
 
 renderToken tk@(Bad { tokenAsStr, line, pos, errMsg }) = do
   liftIO $ do
