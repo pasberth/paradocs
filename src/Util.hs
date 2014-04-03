@@ -4,9 +4,9 @@ module Util where
 
 import           Control.Arrow
 import           Control.Monad
+import qualified Data.List.Split                as Split
 import qualified Data.HashMap.Strict            as HashMap
 import qualified Data.HashSet                   as HashSet
-import qualified Data.List                      as List
 import           Types
 
 reservedNames :: [String]
@@ -26,15 +26,33 @@ unquote ('"':xs)    = unquote xs
 unquote (x:xs)      = x : unquote xs
 unquote []          = []
 
-isSpace :: Token -> Bool
-isSpace (Space {}) = True
-isSpace (LineBreak {}) = True
-isSpace (Word {}) = False
-isSpace (Quote {}) = False
-isSpace (MultiQuote {}) = False
-isSpace (Read {}) = False
-isSpace (ChangeRule {}) = False
-isSpace (Bad {}) = False
+isText :: Token -> Bool
+isText (Word {}) = True
+isText (Quote {}) = True
+isText (MultiQuote {}) = True
+isText _ = False
+
+isBlank :: Token -> Bool
+isBlank (Space {}) = True
+isBlank (LineBreak {}) = True
+isBlank _ = False
+
+isRead :: Token -> Bool
+isRead (Read {}) = True
+isRead _ = False
+
+isChangeRule :: Token -> Bool
+isChangeRule (ChangeRule {}) = True
+isChangeRule _ = False
+
+isBad :: Token -> Bool
+isBad (Bad {}) = True
+isBad _ = False
+
+rejectWhen :: (Token -> Bool) -> String -> Token -> Token
+rejectWhen f errMsg tk
+  | f tk = Bad { tokenAsStr = tokenAsStr tk, line = line tk, pos = pos tk, errMsg = errMsg }
+  | otherwise = tk
 
 emptyRule :: Rule
 emptyRule = Rule
@@ -98,12 +116,4 @@ concatTokens :: [Token] -> String
 concatTokens = map tokenToString >>> join
 
 tokensToAbsoluteRuleName :: [Token] -> AbsoluteRuleName
-tokensToAbsoluteRuleName tokens = reverse (reversedRec tokens) where
-  reversedRec [] = []
-  reversedRec tokens = do
-    let name = takeWhile (not . isSpace) tokens
-        rest = dropWhile isSpace (dropWhile (not . isSpace) tokens)
-    concatTokens name : reversedRec rest
-
-showAbsoluteRuleName :: AbsoluteRuleName -> String
-showAbsoluteRuleName = reverse >>> List.intersperse " " >>> join
+tokensToAbsoluteRuleName = reverse . map concatTokens . Split.wordsBy isBlank

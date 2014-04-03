@@ -146,7 +146,7 @@ spacesInParagraph = do
 paragraph :: Parser Stat
 paragraph = do
   tokens_ <- join <$> some ((++) <$> parseSingleton token <*> spacesInParagraph)
-  let tokens = reverse (dropWhile isSpace (reverse tokens_))
+  let tokens = reverse (dropWhile isBlank (reverse tokens_))
   return $ Paragraph tokens
 
 instr :: Parser Stat
@@ -162,61 +162,20 @@ instr = go where
       Just name -> do
         _ <- spacesInParagraph
         tokens_ <- join <$> many ((++) <$> parseSingleton token <*> spacesInParagraph)
-        let tokens = reverse (dropWhile isSpace (reverse tokens_))
+        let tokens = reverse (dropWhile isBlank (reverse tokens_))
 
         let instrNameAsToken = Word { tokenAsStr = '%':name, pos = pos, line = ByteString.toString line }
         case name of
-          "rule" -> return $ Instr DefRule (instrNameAsToken : map (verifyToken "%rule") tokens)
-          "extend" -> return $ Instr DefExtend (instrNameAsToken : map (verifyToken "%extend") tokens)
-          "def" -> return $ Instr DefMacro (instrNameAsToken : verifyDefMacroTokens tokens)
-          "escape" -> return $ Instr DefEscape (instrNameAsToken : verifyDefEscapeTokens tokens)
-          "render-before" -> return $ Instr DefRenderBefore (instrNameAsToken : map (verifyToken "%render-before") tokens)
-          "render-after" -> return $ Instr DefRenderAfter (instrNameAsToken : map (verifyToken "%render-after") tokens)
-          "indent" -> return $ Instr DefIndent (instrNameAsToken : map (verifyToken "%indent") tokens)
-          "include" -> return $ Instr Include (instrNameAsToken : map (verifyToken "%include") tokens)
+          "rule" -> return $ Instr DefRule (instrNameAsToken : tokens)
+          "extend" -> return $ Instr DefExtend (instrNameAsToken : tokens)
+          "def" -> return $ Instr DefMacro (instrNameAsToken : tokens)
+          "escape" -> return $ Instr DefEscape (instrNameAsToken : tokens)
+          "render-before" -> return $ Instr DefRenderBefore (instrNameAsToken : tokens)
+          "render-after" -> return $ Instr DefRenderAfter (instrNameAsToken : tokens)
+          "indent" -> return $ Instr DefIndent (instrNameAsToken : tokens)
+          "include" -> return $ Instr Include (instrNameAsToken : tokens)
           _ -> Trifecta.unexpected ('%':name)
       Nothing -> Trifecta.unexpected "%"
-
-  verifyToken :: String -> Token -> Token
-  verifyToken _ tk@(Word {}) = tk
-  verifyToken _ tk@(Quote {}) = tk
-  verifyToken rule (ChangeRule {tokenAsStr, line, pos})
-        = Bad { tokenAsStr = tokenAsStr
-                , line = line
-                , pos = pos
-                , errMsg = "`" ++ rule ++ "' can't contain `" ++ tokenAsStr ++ "'"
-                }
-  verifyToken _ tk = tk
-
-  verifyDefMacroTokens :: [Token] -> [Token]
-  verifyDefMacroTokens [] = []
-  verifyDefMacroTokens (token1:tokens) = verifyToken "%def" token1 : tokens
-
-  verifyDefEscapeTokens :: [Token] -> [Token]
-  verifyDefEscapeTokens [] = []
-  verifyDefEscapeTokens (token1:tokens) = verifyDefEscapeToken token1 : map (verifyToken "%escape") tokens
-
-  verifyDefEscapeToken :: Token -> Token
-  verifyDefEscapeToken tk@(Word {tokenAsStr, line, pos})
-        | length tokenAsStr == 1 = tk
-        | otherwise = Bad { tokenAsStr = tokenAsStr
-                            , line = line
-                            , pos = pos
-                            , errMsg = "a character expected but got " ++ show (length tokenAsStr) ++ " characters"
-                            }
-  verifyDefEscapeToken tk@(Quote {tokenAsStr, line, pos})
-        | length (unquote tokenAsStr) == 1 = tk
-        | otherwise = Bad { tokenAsStr = tokenAsStr
-                            , line = line
-                            , pos = pos
-                            , errMsg = "a character expected but got " ++ show (length (unquote tokenAsStr)) ++ " characters"
-                            }
-  verifyDefEscapeToken tk
-        = Bad { tokenAsStr = tokenAsStr tk
-                , line = line tk
-                , pos = pos tk
-                , errMsg = "a character expected but got `" ++ tokenAsStr tk ++ "'"
-                }
 
 document :: Parser AST
 document = Document <$> many (Trifecta.spaces *> (paragraph <|> instr))

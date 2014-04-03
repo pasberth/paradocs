@@ -204,23 +204,28 @@ renderToken instrName@(Read { tokenAsStr, line, pos }) = do
     -- TODO: 
     -- Document []
     Document (Paragraph tokens_:rest) -> do
-      let tokens = dropWhile isSpace tokens_
-      let filePath = concatTokens $ takeWhile (not . isSpace) tokens
-      code .= Document (Paragraph (dropWhile (not . isSpace) tokens):rest)
+      let tokens = dropWhile isBlank tokens_
+      let tmp = map (rejectWhen (not . isText) "bad token") $ takeWhile (not . isBlank) tokens
+      code .= Document (Paragraph (dropWhile (not . isBlank) tokens):rest)
 
-      case pos of
-        TrifectaDelta.Directed currentFilePath _ _ _ _ -> do
-          let currentDirectoryPath = FilePath.dropFileName (ByteString.toString currentFilePath)
-          let sourceFilePath = FilePath.combine currentDirectoryPath filePath
-          exists <- liftIO $ Directory.doesFileExist sourceFilePath
+      if or (map isBad tmp)
+        then mapM_ renderToken tmp
+        else do
+          let filePath = concatTokens $ takeWhile (not . isBlank) tokens
 
-          if exists
-            then do
-              s <- liftIO $ readFile sourceFilePath
-              forM_ s $ \ch -> do
-                renderChar ch
-            else
-              liftIO $ printTokenError instrName ("no such file `" ++ sourceFilePath ++ "'")
+          case pos of
+            TrifectaDelta.Directed currentFilePath _ _ _ _ -> do
+              let currentDirectoryPath = FilePath.dropFileName (ByteString.toString currentFilePath)
+              let sourceFilePath = FilePath.combine currentDirectoryPath filePath
+              exists <- liftIO $ Directory.doesFileExist sourceFilePath
+
+              if exists
+                then do
+                  s <- liftIO $ readFile sourceFilePath
+                  forM_ s $ \ch -> do
+                    renderChar ch
+                else
+                  liftIO $ printTokenError instrName ("no such file `" ++ sourceFilePath ++ "'")
 
 renderToken tk@(ChangeRule { tokenAsStr, line, pos }) = do
   case tail tokenAsStr of 
@@ -237,7 +242,7 @@ renderToken tk@(ChangeRule { tokenAsStr, line, pos }) = do
             Leijen.hPutDoc System.stderr Leijen.linebreak
             Leijen.hPutDoc System.stderr (docHintLine tk)
   code %= \case
-            Document (Paragraph tokens:rest) -> Document (Paragraph (dropWhile isSpace tokens):rest)
+            Document (Paragraph tokens:rest) -> Document (Paragraph (dropWhile isBlank tokens):rest)
             Document [] -> Document []
 
 renderToken tk@(Bad { tokenAsStr, line, pos, errMsg }) = do
@@ -252,82 +257,125 @@ renderToken tk@(Bad { tokenAsStr, line, pos, errMsg }) = do
 execInstr :: Instr -> [Token] -> Renderer ()
 
 execInstr DefRule (_:tokens) = do
-  targetRuleName <- tokensToAbsoluteRuleName <$> deleteBadTokens tokens
-  uses ruleMap (HashMap.lookup targetRuleName) >>= \case
-    Just _ -> do
-      defRuleName .= targetRuleName
-    Nothing -> do
-      defRuleName .= targetRuleName
-      ruleMap %= HashMap.insert targetRuleName emptyRule
+  let tmp = map (rejectWhen (\tk -> not (isText tk || isBlank tk)) "bad token") tokens
+
+  if or (map isBad tmp)
+    then mapM_ renderToken (filter isBad tmp)
+    else do
+      let targetRuleName = tokensToAbsoluteRuleName tmp
+      uses ruleMap (HashMap.lookup targetRuleName) >>= \case
+        Just _ -> do
+          defRuleName .= targetRuleName
+        Nothing -> do
+          defRuleName .= targetRuleName
+          ruleMap %= HashMap.insert targetRuleName emptyRule
 
 execInstr DefExtend (instrName:tokens) = do
-  extendingRuleName <- tokensToAbsoluteRuleName <$> deleteBadTokens tokens
+  let tmp = map (rejectWhen (\tk -> not (isText tk || isBlank tk)) "bad token") tokens
 
-  uses ruleMap (HashMap.member extendingRuleName) >>= \case
-    True -> return ()
-    False -> liftIO $ printTokenWarning instrName ("extending a not declared rule `" ++ join (List.intersperse " " (reverse extendingRuleName)) ++ "'")
+  if or (map isBad tmp)
+    then mapM_ renderToken (filter isBad tmp)
+    else do
+      let extendingRuleName = tokensToAbsoluteRuleName tmp
 
-  targetRuleName <- use defRuleName
+      uses ruleMap (HashMap.member extendingRuleName) >>= \case
+        True -> return ()
+        False -> liftIO $ printTokenWarning instrName ("extending a not declared rule `" ++ join (List.intersperse " " (reverse extendingRuleName)) ++ "'")
 
-  newRuleMap <- uses ruleMap (HashMap.adjust (\rule -> rule { ruleAncestors = extendingRuleName : ruleAncestors rule }) targetRuleName)
-
-  if isCycle targetRuleName newRuleMap
-    then liftIO $ printTokenError instrName "cyclic extend detected"
-    else ruleMap .= newRuleMap
-
-execInstr DefMacro (_:name:tokens_) = do
-  let tokens = dropWhile isSpace tokens_
-  rejectBadToken name >>= \case
-    Just name -> do
       targetRuleName <- use defRuleName
-      ruleMap %= HashMap.adjust (\rule -> rule { ruleMacroMap = HashMap.insert (tokenToString name) tokens (ruleMacroMap rule) }) targetRuleName
-    Nothing -> return ()
 
-execInstr DefEscape (_:name:tokens_) = do
-  let tokens = dropWhile isSpace tokens_
-  maybeEscapeTarget <- rejectBadToken name
-  escapedString <- concatTokens <$> deleteBadTokens tokens
+      newRuleMap <- uses ruleMap (HashMap.adjust (\rule -> rule { ruleAncestors = extendingRuleName : ruleAncestors rule }) targetRuleName)
 
-  case maybeEscapeTarget of
-    Just escapeTarget -> do
-      let (ch:_) = tokenToString escapeTarget
-      targetRuleName <- use defRuleName
-      ruleMap %= HashMap.adjust (\rule -> rule { ruleEscapeMap = HashMap.insert ch escapedString (ruleEscapeMap rule) }) targetRuleName
-    Nothing -> return ()
+      if isCycle targetRuleName newRuleMap
+        then liftIO $ printTokenError instrName "cyclic extend detected"
+        else ruleMap .= newRuleMap
+
+execInstr DefMacro (instrName:tokens) = do
+  case break isBlank tokens of
+    ([], []) -> do
+      liftIO $ printTokenError instrName "definition expected"
+    (name, body) -> do
+      let tmp = map (rejectWhen (not . isText) "bad token") name
+      if or (map isBad tmp)
+        then mapM_ renderToken (filter isBad tmp)
+        else do
+          targetRuleName <- use defRuleName
+          ruleMap %= HashMap.adjust (\rule -> rule { ruleMacroMap = HashMap.insert (concatTokens name) (dropWhile isBlank body) (ruleMacroMap rule) }) targetRuleName
+
+execInstr DefEscape (instrName:tokens) = do
+  case break isBlank tokens of
+    ([], []) -> do
+      liftIO $ printTokenError instrName "definition expected"
+    (name, body) -> do
+      let tmp = map (rejectWhen (not . isText) "bad token") name
+      if or (map isBad tmp)
+        then mapM_ renderToken (filter isBad tmp)
+        else do
+          case concatTokens name of
+            (ch:[]) -> do
+              targetRuleName <- use defRuleName
+              ruleMap %= HashMap.adjust (\rule -> rule { ruleEscapeMap = HashMap.insert ch (concatTokens (dropWhile isBlank body)) (ruleEscapeMap rule) }) targetRuleName
+            s -> do
+              liftIO $ printTokenError instrName ("a character expected but got `" ++ s ++ "'")
 
 execInstr DefRenderAfter (_:tokens) = do
   targetRuleName <- use defRuleName
-  renderAfter <- concatTokens <$> deleteBadTokens tokens
-  ruleMap %= HashMap.adjust (\rule -> rule { ruleRenderAfter = renderAfter }) targetRuleName
+  let tmp = map (rejectWhen (\tk -> not (isText tk || isBlank tk)) "bad token") tokens
+
+  if or (map isBad tmp)
+    then mapM_ renderToken (filter isBad tmp)
+    else do
+      let renderAfter = concatTokens tokens
+      ruleMap %= HashMap.adjust (\rule -> rule { ruleRenderAfter = renderAfter }) targetRuleName
 
 execInstr DefRenderBefore (_:tokens) = do
   targetRuleName <- use defRuleName
-  renderBefore <- concatTokens <$> deleteBadTokens tokens
-  ruleMap %= HashMap.adjust (\rule -> rule { ruleRenderBefore = renderBefore }) targetRuleName
+
+  let tmp = map (rejectWhen (\tk -> not (isText tk || isBlank tk)) "bad token") tokens
+
+  if or (map isBad tmp)
+    then mapM_ renderToken (filter isBad tmp)
+    else do
+      let renderBefore = concatTokens tokens
+      ruleMap %= HashMap.adjust (\rule -> rule { ruleRenderBefore = renderBefore }) targetRuleName
 
 execInstr DefIndent (_:tokens) = do
-  indent <- concatTokens <$> deleteBadTokens tokens
   targetRuleName <- use defRuleName
-  ruleMap %= HashMap.adjust (\rule -> rule { ruleIndent = indent }) targetRuleName
+
+  let tmp = map (rejectWhen (\tk -> not (isText tk || isBlank tk)) "bad token") tokens
+
+  if or (map isBad tmp)
+    then mapM_ renderToken (filter isBad tmp)
+    else do
+      let indent = concatTokens tokens
+      ruleMap %= HashMap.adjust (\rule -> rule { ruleIndent = indent }) targetRuleName
 
 execInstr Include (instrName:tokens) = do
-  filePath <- concatTokens <$> deleteBadTokens tokens
-
-  case pos instrName of
-    TrifectaDelta.Directed currentFilePath _ _ _ _ -> do
-      let currentDirectoryPath = FilePath.dropFileName (ByteString.toString currentFilePath)
-      let targetPath = FilePath.combine currentDirectoryPath filePath
-      exists <- liftIO $ Directory.doesFileExist targetPath
-
-      if exists
+  case break isBlank tokens of
+    (name, rest) -> do
+      let tmp1 = map (rejectWhen (not . isBlank) "bad token") rest
+      let tmp = map (rejectWhen (not . isText) "bad token") name
+      if or (map isBad tmp1) || or (map isBad tmp)
         then do
-          liftIO (Trifecta.parseFromFile (runParser (document <* Trifecta.eof) ParserState) targetPath) >>= \case
-            Just (Document codes1) ->
-              code %= \case
-                        Document codes2 -> Document (codes1 ++ codes2)
-            Nothing -> return ()
-        else
-          liftIO $ printTokenError instrName ("no such file `" ++ targetPath ++ "'")
+          mapM_ renderToken (filter isBad tmp1)
+          mapM_ renderToken (filter isBad tmp)
+        else do
+          let filePath = concatTokens name
+          case pos instrName of
+            TrifectaDelta.Directed currentFilePath _ _ _ _ -> do
+              let currentDirectoryPath = FilePath.dropFileName (ByteString.toString currentFilePath)
+              let targetPath = FilePath.combine currentDirectoryPath filePath
+              exists <- liftIO $ Directory.doesFileExist targetPath
+
+              if exists
+                then do
+                  liftIO (Trifecta.parseFromFile (runParser (document <* Trifecta.eof) ParserState) targetPath) >>= \case
+                    Just (Document codes1) ->
+                      code %= \case
+                                Document codes2 -> Document (codes1 ++ codes2)
+                    Nothing -> return ()
+                else
+                  liftIO $ printTokenError instrName ("no such file `" ++ targetPath ++ "'")
 
 render :: Renderer String
 render = use code >>= \case
@@ -347,10 +395,3 @@ render = use code >>= \case
     -> do
       use stack >>= mapM_ (\_ -> closeWorkingRule)
       uses rendered renderedToString
-
-rejectBadToken :: Token -> Renderer (Maybe Token)
-rejectBadToken tk@(Bad {}) = do { renderToken tk ; return Nothing }
-rejectBadToken tk = return $ Just tk
-
-deleteBadTokens :: [Token] -> Renderer [Token]
-deleteBadTokens tokens = Maybe.catMaybes <$> mapM rejectBadToken tokens

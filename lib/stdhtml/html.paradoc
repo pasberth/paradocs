@@ -7,7 +7,7 @@
   %escape & &amp;
   %escape < &lt;
   %escape > &gt;
-  %escape \ &nbsp;
+  %escape \  &nbsp;
   %escape \
             <br />
   %indent "  "
