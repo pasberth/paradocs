@@ -1,4 +1,5 @@
 %rule html head
+  %extend everywhere
   %render-before \
 <head>
   %render-after </head>

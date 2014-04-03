@@ -1,4 +1,5 @@
 %rule html
+  %extend everywhere
   %render-before <!DOCTYPE html>\
 <html>
   %render-after </html>

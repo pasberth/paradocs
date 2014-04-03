@@ -1,4 +1,5 @@
 %rule block
+  %extend everywhere
 
 %include block/ul.paradoc
 %include block/table.paradoc

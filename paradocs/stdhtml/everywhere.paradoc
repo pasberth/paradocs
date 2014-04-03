@@ -1,0 +1,3 @@
+%rule everywhere
+
+%include everywhere/raw.paradoc

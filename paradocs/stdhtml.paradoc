@@ -1,3 +1,4 @@
+%include stdhtml/everywhere.paradoc
 %include stdhtml/inline.paradoc
 %include stdhtml/block.paradoc
 %include stdhtml/html.paradoc
