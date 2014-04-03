@@ -292,7 +292,7 @@ execInstr DefExtend (instrName:tokens) = do
 
 execInstr DefMacro (instrName:tokens) = do
   case break isBlank tokens of
-    ([], []) -> do
+    ([], _) -> do
       liftIO $ printTokenError instrName "definition expected"
     (name, body) -> do
       let tmp = map (rejectWhen (not . isText) "bad token") name
@@ -304,7 +304,7 @@ execInstr DefMacro (instrName:tokens) = do
 
 execInstr DefEscape (instrName:tokens) = do
   case break isBlank tokens of
-    ([], []) -> do
+    ([], _) -> do
       liftIO $ printTokenError instrName "definition expected"
     (name, body) -> do
       let tmp = map (rejectWhen (not . isText) "bad token") name
@@ -316,7 +316,7 @@ execInstr DefEscape (instrName:tokens) = do
               targetRuleName <- use defRuleName
               ruleMap %= HashMap.adjust (\rule -> rule { ruleEscapeMap = HashMap.insert ch (concatTokens (dropWhile isBlank body)) (ruleEscapeMap rule) }) targetRuleName
             s -> do
-              liftIO $ printTokenError instrName ("a character expected but got `" ++ s ++ "'")
+              liftIO $ printTokenError ((head name) { tokenAsStr = join (map tokenAsStr name) }) ("a character expected but got `" ++ s ++ "'")
 
 execInstr DefRenderAfter (_:tokens) = do
   targetRuleName <- use defRuleName
