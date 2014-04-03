@@ -25,3 +25,18 @@
   %render-after \"></script>
 
 %rule html head linkscript end
+
+%rule html head script
+  %render-before """
+
+<script type="text/javascript">
+"""
+
+  %render-after </script>
+
+  %escape & &
+  %escape < <
+  %escape > >
+  %escape \ " "
+  %escape \
+          \
