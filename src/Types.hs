@@ -37,6 +37,11 @@ data Token
     , line          :: String
     , pos           :: TrifectaDelta.Delta
     }
+  | Read            -- /%read/
+    { tokenAsStr    :: String
+    , line          :: String
+    , pos           :: TrifectaDelta.Delta
+    }
   | ChangeRule      -- /%\S+/
     { tokenAsStr    :: String
     , line          :: String

@@ -194,6 +194,27 @@ renderToken (Space {tokenAsStr}) = do
 renderToken (LineBreak {tokenAsStr}) = do
   rendered %= (RenderedLine "":)
 
+renderToken instrName@(Read { tokenAsStr, line, pos }) = do
+  use code >>= \case
+    Document (Paragraph tokens_:rest) -> do
+      let tokens = dropWhile isSpace tokens_
+      let filePath = concatTokens $ takeWhile (not . isSpace) tokens
+      code .= Document (Paragraph (dropWhile (not . isSpace) tokens):rest)
+
+      case pos of
+        TrifectaDelta.Directed currentFilePath _ _ _ _ -> do
+          let currentDirectoryPath = FilePath.dropFileName (ByteString.toString currentFilePath)
+          let sourceFilePath = FilePath.combine currentDirectoryPath filePath
+          exists <- liftIO $ Directory.doesFileExist sourceFilePath
+
+          if exists
+            then do
+              s <- liftIO $ readFile sourceFilePath
+              forM_ s $ \ch -> do
+                renderChar ch
+            else
+              liftIO $ printTokenError instrName ("no such file `" ++ sourceFilePath ++ "'")
+
 renderToken tk@(ChangeRule { tokenAsStr, line, pos }) = do
   case tail tokenAsStr of 
     ".." -> do

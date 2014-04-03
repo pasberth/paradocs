@@ -87,6 +87,8 @@ changeRule = Trifecta.try $ do
   pos <- Trifecta.position
   _ <- Trifecta.char '%'
   optional wordAsString >>= \case
+    Just "read" -> do
+      return $ Read { tokenAsStr = "%read", line = ByteString.toString line, pos = pos }
     Just name -> do
       if
         | name `elem` reservedNames

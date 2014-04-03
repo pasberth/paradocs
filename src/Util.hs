@@ -32,6 +32,7 @@ isSpace (LineBreak {}) = True
 isSpace (Word {}) = False
 isSpace (Quote {}) = False
 isSpace (MultiQuote {}) = False
+isSpace (Read {}) = False
 isSpace (ChangeRule {}) = False
 isSpace (Bad {}) = False
 
