@@ -557,7 +557,6 @@ closeWorkingRule = do
   StackValue { stackWorkingRuleName, stackRendered } <- uses stack head
   stack %= tail
   tmp <- use rendered
-  --let tmp' = if not (null tmp) && head tmp == ' ' then tail tmp else tmp
   workingRuleName .= stackWorkingRuleName 
   rendered .= stackRendered
 
