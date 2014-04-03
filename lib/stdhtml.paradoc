@@ -1,6 +1,7 @@
 %include stdhtml/everywhere.paradoc
 %include stdhtml/inline.paradoc
 %include stdhtml/block.paradoc
+%include stdhtml/section.paradoc
 %include stdhtml/html.paradoc
 
 %rule

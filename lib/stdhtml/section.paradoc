@@ -1,0 +1,84 @@
+%rule section
+  %extend everywhere
+  %extend inline
+  %extend block
+
+%rule section paragraph
+  %render-before \
+<p>\
+  %render-after </p>
+  %indent "  "
+
+%rule sections
+  %def = %sect1%h1
+
+%rule sections sect1
+  %extend section
+  %render-before \
+<div class=\"sect1\">
+  %render-after </section>
+  %indent "  "
+  %def == %sect2%h2
+
+%rule sections sect1 h1
+  %render-before <h1>
+  %render-after </h1>
+
+%rule sections sect1 sect2
+  %extend section
+  %render-before \
+<div class=\"sect2\">
+  %render-after </div>
+  %indent "  "
+  %def === %sect3%h3
+
+%rule sections sect1 sect2 h2
+  %render-before <h2>
+  %render-after </h2>
+
+%rule sections sect1 sect2 sect3
+  %extend section
+  %render-before \
+<div class=\"sect3\">
+  %render-after </div>
+  %indent "  "
+  %def ==== %sect4%h4
+
+%rule sections sect1 sect2 sect3 h3
+  %render-before <h3>
+  %render-after </h3>
+
+%rule sections sect1 sect2 sect3 sect4
+  %extend section
+  %render-before \
+<div class=\"sect4\">
+  %render-after </div>
+  %indent "  "
+  %def ==== %sec4%h4
+
+%rule sections sect1 sect2 sect3 sect4 h4
+  %render-before <h4>
+  %render-after </h4>
+
+%rule sections sect1 sect2 sect3 sect4 sect5
+  %extend section
+  %render-before \
+<div class=\"sect5\">
+  %render-after </div>
+  %indent "  "
+  %def ===== %sec5%h5
+
+%rule sections sect1 sect2 sect3 sect4 sect5 h5
+  %render-before <h5>
+  %render-after </h5>
+
+%rule sections sect1 sect2 sect3 sect4 sect5 sect6
+  %extend section
+  %render-before \
+<div class=\"sect6\">
+  %render-after </div>
+  %indent "  "
+
+%rule sections sect1 sect2 sect3 sect4 sect5 sect6 h6
+  %render-before <h6>
+  %render-after </h6>
