@@ -4,6 +4,7 @@
   %def + %code
   %def ^ %sup
   %def ~ %sub
+  %def ` %a
 
 %rule inline strong
   %extend inline
@@ -34,3 +35,13 @@
   %render-before <sub>
   %render-after </sub>
   %def ~ %..
+
+%rule inline a
+  %render-before <a href=\"
+  %render-after \">
+  %def ` %link-text
+
+%rule inline link-text
+  %extend inline
+  %render-after </a>
+  %def ` %..

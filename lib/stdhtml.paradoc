@@ -3,6 +3,7 @@
 %include stdhtml/block.paradoc
 %include stdhtml/section.paradoc
 %include stdhtml/html.paradoc
+%include stdhtml/styles.paradoc
 
 %rule
 

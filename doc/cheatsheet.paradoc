@@ -37,6 +37,11 @@
 |%pre"sub~script~"|sub~script~
 |%pre"*_bold italic_*"|*_bold italic_*
 
+== Links
+
+%cheatsheet
+|%pre"`cheatsheet.html`here`"|`cheatsheet.html`here`
+
 == Lists
 
 %cheatsheet
