@@ -1,64 +1,46 @@
 %include ../lib/stdhtml.paradoc
 
 %rule block cheatsheet
-  %render-before <div class=\"cheatsheet\">
-  %render-after </div>
-  %def | %left
+  %render-before <table class=\"cheatsheet\">
+  %render-after </table>
+  %def | %tr%left
 
-%rule block cheatsheet left
+%rule block cheatsheet tr
+  %render-before <tr>
+  %render-after </tr>
+
+%rule block cheatsheet tr left
+  %extend everywhere
   %extend inline
   %extend block
-  %render-before <div class=\"left\">
-  %render-after </div>
+  %render-before <td class=\"left\">
+  %render-after </td>
   %def | %right
 
-%rule block cheatsheet right
+%rule block cheatsheet tr right
+  %extend everywhere
   %extend inline
   %extend block
-  %render-before <div class=\"right\">
-  %render-after </div>
-  %def | %left
-
-%html
-%head
-%style
-"""
-.cheatsheet {
-  width: 100%;
-  margin: 0;
-  padding: 0;
-}
-.cheatsheet .left {
-  width: 50%;
-  margin: 0;
-  padding: 0;
-  float: left;
-}
-.cheatsheet .right {
-  width: 50%;
-  margin: 0;
-  padding: 0;
-  float: left;
-}
-"""
-%body
+  %render-before <td class=\"right\">
+  %render-after </td>
+  %def | %tr%left
 
 = Paradocs cheatsheet
 
 == Formatted Text
 
 %cheatsheet
-|"*bold*"|*bold*
-|"_italic_"|_italic_
-|"+monospace+"|+monospace+
-|"super^script^"|super^script^
-|"sub~script~"|sub~script~
-|"*_bold italic_*"|*_bold italic_*
+|%pre"*bold*"|*bold*
+|%pre"_italic_"|_italic_
+|%pre"+monospace+"|+monospace+
+|%pre"super^script^"|super^script^
+|%pre"sub~script~"|sub~script~
+|%pre"*_bold italic_*"|*_bold italic_*
 
 == Tables
 
 %cheatsheet
-|"""
+|%pre"""
 %table
 =||column A|column B|column C
 .|row 1|cell A1|cell B1|cell C1
@@ -70,3 +52,25 @@
 .|row 1|cell A1|cell B1|cell C1
 .|row 2|cell A2|cell B2|cell C2
 .|row 3|cell A3|cell B3|cell C3
+
+== Raw HTML
+
+%cheatsheet
+|%pre"""
+%raw
+<strong>hello</strong>
+"""
+|%raw
+<strong>hello</strong>
+|%pre"""
+%raw"<strong>hello</strong>"
+"""
+|%raw"<strong>hello</strong>"
+|%pre""""
+%raw"""
+<strong>hello</strong>
+"""
+""""
+|%raw"""
+<strong>hello</strong>
+"""

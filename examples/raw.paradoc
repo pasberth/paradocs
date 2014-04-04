@@ -1,5 +1,0 @@
-%include ../lib/stdhtml.paradoc
-
-= Raw examples
-
-%raw"""<strong>hello!</strong>"""
