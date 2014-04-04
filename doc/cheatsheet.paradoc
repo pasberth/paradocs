@@ -37,6 +37,31 @@
 |%pre"sub~script~"|sub~script~
 |%pre"*_bold italic_*"|*_bold italic_*
 
+== Lists
+
+%cheatsheet
+|%pre"""
+%ul
+- item 1
+- item 2
+-- item 2.1
+--- item 2.1.1
+--- item 2.1.2
+-- item 2.2
+- item 3
+- item 4
+"""
+|%ul
+- item 1
+- item 2
+-- item 2.1
+--- item 2.1.1
+--- item 2.1.2
+-- item 2.2
+- item 3
+- item 4
+
+
 == Tables
 
 %cheatsheet
