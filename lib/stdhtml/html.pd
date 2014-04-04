@@ -1,0 +1,13 @@
+%rule html
+  %before       %"<!DOCTYPE html><html>"
+  %after        %"</html>"
+
+  %escape &     %"&amp;"
+  %escape <     %"&lt;"
+  %escape >     %"&gt;"
+  %escape " "   %"&nbsp;"
+  %escape \
+                %"<br />"
+
+%include html/head.pd
+%include html/body.pd

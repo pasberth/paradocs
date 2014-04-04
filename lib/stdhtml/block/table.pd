@@ -1,0 +1,39 @@
+%rule block table
+  %before %"<table>"
+  %after %"</table>"
+  %def = %thead %tr
+  %def . %tbody %tr
+
+%rule block table thead
+  %before %"<thead>"
+  %after %"</thead>"
+
+%rule block table thead tr
+  %before %"<tr>"
+  %after %"</tr>"
+  %def | %th
+
+%rule block table thead tr th
+  %extend inline
+  %before %"<th>"
+  %after %"</th>"
+  %def | %th
+  %def = %thead%tr
+  %def . %tbody%tr
+
+%rule block table tbody
+  %before %"<tbody>"
+  %after %"</tbody>"
+
+%rule block table tbody tr
+  %before %"<tr>"
+  %after %"</tr>"
+  %def | %td
+
+%rule block table tbody tr td
+  %extend inline
+  %before %"<td>"
+  %after %"</td>"
+  %def | %td
+  %def = %thead %tr
+  %def . %tr

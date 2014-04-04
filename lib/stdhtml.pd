@@ -1,0 +1,4 @@
+%include stdhtml/inline.pd
+%include stdhtml/block.pd
+%include stdhtml/section.pd
+%include stdhtml/html.pd

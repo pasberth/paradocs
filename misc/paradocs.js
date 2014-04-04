@@ -4,6 +4,11 @@ hljs.registerLanguage("paradocs", function(hljs) {
       {
         cN: 'string',
         v: [
+          { b: '%\\\\.?' },
+          { b: '%""""', e: '""""' },
+          { b: '%"""', e: '"""' },
+          { b: '%""', e: '""' },
+          { b: '%"', e: '"' },
           { b: '\\\\.?' },
           { b: '""""', e: '""""' },
           { b: '"""', e: '"""' },
@@ -18,9 +23,8 @@ hljs.registerLanguage("paradocs", function(hljs) {
           { b: "%extend" },
           { b: "%def" },
           { b: "%escape" },
-          { b: "%render-before" },
-          { b: "%render-after" },
-          { b: "%indent" },
+          { b: "%before" },
+          { b: "%after" },
           { b: "%include" },
           { b: "%read" },
         ]

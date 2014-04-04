@@ -1,29 +1,29 @@
-%include ../lib/stdhtml.paradoc
+%include ../lib/paradocs/html.pd
 
 %rule block cheatsheet
-  %render-before <table class=\"cheatsheet\">
-  %render-after </table>
+  %before %""<table class="cheatsheet">""
+  %after %"</table>"
   %def | %tr%left
 
 %rule block cheatsheet tr
-  %render-before <tr>
-  %render-after </tr>
+  %before %"<tr>"
+  %after %"</tr>"
 
 %rule block cheatsheet tr left
   %extend everywhere
   %extend inline
   %extend block
-  %render-before <td class=\"left\">
-  %render-after </td>
+  %before %""<td class="left">""
+  %after %""</td>""
   %def | %right
 
 %rule block cheatsheet tr right
   %extend everywhere
   %extend inline
   %extend block
-  %render-before <td class=\"right\">
-  %render-after </td>
-  %def | %tr%left
+  %before %""<td class="right">""
+  %after %""</td>""
+  %def | %tr %left
 
 = Paradocs cheatsheet
 
@@ -49,22 +49,12 @@
 %ul
 - item 1
 - item 2
--- item 2.1
---- item 2.1.1
---- item 2.1.2
--- item 2.2
 - item 3
-- item 4
 """
 |%ul
 - item 1
 - item 2
--- item 2.1
---- item 2.1.1
---- item 2.1.2
--- item 2.2
 - item 3
-- item 4
 
 
 == Tables
@@ -87,20 +77,14 @@
 
 %cheatsheet
 |%pre"""
-%raw
-<strong>hello</strong>
+%"<strong>hello</strong>"
 """
-|%raw
-<strong>hello</strong>
+|%"<strong>hello</strong>"
 |%pre"""
-%raw"<strong>hello</strong>"
-"""
-|%raw"<strong>hello</strong>"
-|%pre""""
-%raw"""
+%""
 <strong>hello</strong>
+""
 """
-""""
-|%raw"""
+|%""
 <strong>hello</strong>
-"""
+""

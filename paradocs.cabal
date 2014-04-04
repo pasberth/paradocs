@@ -1,6 +1,6 @@
 name:           paradocs
 version:        1.0.0
-cabal-Version:  >= 1.2
+cabal-version:  >= 1.8
 build-type:     Simple
 license:        MIT
 license-file:   LICENSE
@@ -16,19 +16,51 @@ description:
 
 category:       Tools
 
+library
+  ghc-options:    -Wall -Werror -O2
+  build-depends:
+      base
+    , mtl
+    , lens
+    , control-bool
+    , free-operational
+    , control-monad-loop
+    , hashable
+    , unordered-containers
+    , split
+    , filepath
+    , directory
+    , ansi-wl-pprint
+  exposed-modules:
+    Language.Paradocs,
+    Language.Paradocs.EscapeEnv,
+    Language.Paradocs.File,
+    Language.Paradocs.MonadStorage,
+    Language.Paradocs.PrettyPrint,
+    Language.Paradocs.Renderer,
+    Language.Paradocs.RendererState,
+    Language.Paradocs.Rule,
+    Language.Paradocs.RuleEnv,
+    Language.Paradocs.RuleName,
+    Language.Paradocs.Token,
+    Language.Paradocs.Types
+
 executable paradocs
-  hs-source-dirs: src
-  main-is:        Main.hs
+  hs-source-dirs: Executable
+  main-is:        Paradocs.hs
   ghc-options:    -Wall -O2
   build-depends:
-    base,
-    mtl,
-    lens,
-    control-monad-loop,
-    unordered-containers,
-    split,
-    utf8-string,
-    trifecta,
-    filepath,
-    directory,
-    ansi-wl-pprint
+      base
+    , ansi-wl-pprint
+    , paradocs
+
+test-suite test-readinstr
+  type:                 exitcode-stdio-1.0
+  hs-source-dirs:
+    test
+  main-is: ReadInstructionSpec.hs
+  build-depends:
+      base
+    , unordered-containers
+    , paradocs
+    , hspec

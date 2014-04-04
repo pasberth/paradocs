@@ -1,0 +1,5 @@
+%include ../stdhtml.pd
+
+%html
+%head
+%body

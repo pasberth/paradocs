@@ -1,0 +1,69 @@
+%rule section
+  %extend inline
+  %extend block
+
+%rule section paragraph
+  %before %"<p>"
+  %after %"</p>"
+
+%rule sections
+  %def = %sect1 %h1
+
+%rule sections sect1
+  %extend section
+  %before %""<div class="sect1">""
+  %after %""</section>""
+  %def == %sect2%h2
+
+%rule sections sect1 h1
+  %before %"<h1>"
+  %after %"</h1>"
+
+%rule sections sect1 sect2
+  %extend section
+  %before %""<div class="sect2">""
+  %after %""</div>""
+  %def === %sect3%h3
+
+%rule sections sect1 sect2 h2
+  %before %"<h2>"
+  %after %"</h2>"
+
+%rule sections sect1 sect2 sect3
+  %extend section
+  %before %""<div class="sect3">""
+  %after %""</div>""
+  %def ==== %sect4%h4
+
+%rule sections sect1 sect2 sect3 h3
+  %before %"<h3>"
+  %after %"</h3>"
+
+%rule sections sect1 sect2 sect3 sect4
+  %extend section
+  %before %""<div class="sect4">""
+  %after %"</div>"
+  %def ==== %sec4%h4
+
+%rule sections sect1 sect2 sect3 sect4 h4
+  %before %"<h4>"
+  %after %"</h4>"
+
+%rule sections sect1 sect2 sect3 sect4 sect5
+  %extend section
+  %before %""<div class="sect5">""
+  %after %""</div>""
+  %def ===== %sec5%h5
+
+%rule sections sect1 sect2 sect3 sect4 sect5 h5
+  %before %"<h5>"
+  %after %"</h5>"
+
+%rule sections sect1 sect2 sect3 sect4 sect5 sect6
+  %extend section
+  %before %""<div class="sect6">""
+  %after %"</div>"
+
+%rule sections sect1 sect2 sect3 sect4 sect5 sect6 h6
+  %before %"<h6>"
+  %after %"</h6>"

@@ -1,7 +1,31 @@
 { "name": "Paradocs",
   "scopeName": "source.paradocs",
-  "fileTypes": ["paradoc"],
+  "fileTypes": ["pd"],
   "patterns": [
+    {
+      "match": "%\\\\.?",
+      "name": "string.source.paradocs"
+    },
+    {
+      "begin": "%\"\"\"\"",
+      "end": "\"\"\"\"",
+      "name": "string.source.paradocs"
+    },
+    {
+      "begin": "%\"\"\"",
+      "end": "\"\"\"",
+      "name": "string.source.paradocs"
+    },
+    {
+      "begin": "%\"\"",
+      "end": "\"\"",
+      "name": "string.source.paradocs"
+    },
+    {
+      "begin": "%\"",
+      "end": "\"",
+      "name": "string.source.paradocs"
+    },
     {
       "match": "\\\\.?",
       "name": "string.source.paradocs"
@@ -43,15 +67,11 @@
       "name": "keyword.source.paradocs"
     },
     {
-      "match": "%render-before",
+      "match": "%before",
       "name": "keyword.source.paradocs"
     },
     {
-      "match": "%render-after",
-      "name": "keyword.source.paradocs"
-    },
-    {
-      "match": "%indent",
+      "match": "%after",
       "name": "keyword.source.paradocs"
     },
     {

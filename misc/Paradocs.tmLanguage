@@ -4,12 +4,50 @@
 <dict>
 	<key>fileTypes</key>
 	<array>
-		<string>paradoc</string>
+		<string>pd</string>
 	</array>
 	<key>name</key>
 	<string>Paradocs</string>
 	<key>patterns</key>
 	<array>
+		<dict>
+			<key>match</key>
+			<string>%\\.?</string>
+			<key>name</key>
+			<string>string.source.paradocs</string>
+		</dict>
+		<dict>
+			<key>begin</key>
+			<string>%""""</string>
+			<key>end</key>
+			<string>""""</string>
+			<key>name</key>
+			<string>string.source.paradocs</string>
+		</dict>
+		<dict>
+			<key>begin</key>
+			<string>%"""</string>
+			<key>end</key>
+			<string>"""</string>
+			<key>name</key>
+			<string>string.source.paradocs</string>
+		</dict>
+		<dict>
+			<key>begin</key>
+			<string>%""</string>
+			<key>end</key>
+			<string>""</string>
+			<key>name</key>
+			<string>string.source.paradocs</string>
+		</dict>
+		<dict>
+			<key>begin</key>
+			<string>%"</string>
+			<key>end</key>
+			<string>"</string>
+			<key>name</key>
+			<string>string.source.paradocs</string>
+		</dict>
 		<dict>
 			<key>match</key>
 			<string>\\.?</string>
@@ -74,19 +112,13 @@
 		</dict>
 		<dict>
 			<key>match</key>
-			<string>%render-before</string>
+			<string>%before</string>
 			<key>name</key>
 			<string>keyword.source.paradocs</string>
 		</dict>
 		<dict>
 			<key>match</key>
-			<string>%render-after</string>
-			<key>name</key>
-			<string>keyword.source.paradocs</string>
-		</dict>
-		<dict>
-			<key>match</key>
-			<string>%indent</string>
+			<string>%after</string>
 			<key>name</key>
 			<string>keyword.source.paradocs</string>
 		</dict>

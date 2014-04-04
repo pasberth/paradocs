@@ -1,7 +1,0 @@
-%rule html body
-  %extend everywhere
-  %extend sections
-  %render-before \
-<body>
-  %render-after </body>
-  %indent "  "
