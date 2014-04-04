@@ -114,7 +114,7 @@ closeWorkingRule = do
         shouldIndent >>= \case
                           True -> appendString linePrefix
                           False -> return ()
-        appendString (reverse first)
+        appendString (dropWhile Char.isSpace (reverse first))
         forM_ rest $ \(RenderedLine line) -> do
           let stripped = dropWhile Char.isSpace line
           if null stripped
@@ -241,9 +241,6 @@ renderToken tk@(ChangeRule { tokenAsStr, line, pos }) = do
             Leijen.hPutDoc System.stderr (Leijen.bold (Leijen.string ("not in scope `" ++ relativeRuleName ++ "'")))
             Leijen.hPutDoc System.stderr Leijen.linebreak
             Leijen.hPutDoc System.stderr (docHintLine tk)
-  code %= \case
-            Document (Paragraph tokens:rest) -> Document (Paragraph (dropWhile isBlank tokens):rest)
-            Document [] -> Document []
 
 renderToken tk@(Bad { tokenAsStr, line, pos, errMsg }) = do
   liftIO $ do
