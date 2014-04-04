@@ -178,5 +178,5 @@ instr = go where
       Nothing -> Trifecta.unexpected "%"
 
 document :: Parser AST
-document = Document <$> many (Trifecta.spaces *> (paragraph <|> instr))
+document = Trifecta.spaces *> (Document <$> many ((paragraph <|> instr) <* Trifecta.spaces))
 
