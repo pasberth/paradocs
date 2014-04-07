@@ -296,7 +296,13 @@ renderExtendInstruction = do
       then do
         targetRuleName <- use defRuleName
         let absoluteRuleName = Token.toAbsoluteRuleName ruleNameTokens
-        ruleEnv %= HashMap.adjust (ancestors %~ (absoluteRuleName:)) targetRuleName
+        newRuleEnv <- uses ruleEnv (HashMap.adjust (ancestors %~ (absoluteRuleName:)) targetRuleName)
+        if RuleEnv.isCycle targetRuleName newRuleEnv
+          then do
+            workingFile . sourceToken .= Token.toString instructionToken
+            failure "cyclic inheritance detected"
+          else do
+            ruleEnv .= newRuleEnv
         forM_ (instructionToken:ruleNameTokens) $ \_ -> dropToken
       else do
         workingFile . sourceToken .= Token.toString instructionToken
