@@ -1,1 +1,25 @@
 %rule html head
+  %before %""<head>""
+  %after %""</head>""
+
+%rule html head style
+  %before %""<style type="text/css">""
+  %after %""</style>""
+
+  %escape & %\&
+  %escape < %\<
+  %escape > %\>
+  %escape " " %" "
+  %escape \
+          %\
+
+%rule html head script
+  %before %""<script type="text/javascript">""
+  %after %"</script>"
+
+  %escape & %\&
+  %escape < %\<
+  %escape > %\>
+  %escape " " %" "
+  %escape \
+          %\

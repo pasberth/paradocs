@@ -1,0 +1,2 @@
+%rule html head
+  %def :simple.css: %style %read styles/simple.css

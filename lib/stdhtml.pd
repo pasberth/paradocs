@@ -2,3 +2,4 @@
 %include stdhtml/block.pd
 %include stdhtml/section.pd
 %include stdhtml/html.pd
+%include stdhtml/styles.pd
