@@ -40,6 +40,16 @@
 %cheatsheet
 |%pre"`cheatsheet.html`here`"|`cheatsheet.html`here`
 
+== Read & Include files
+
+`cheatsheet/hello.pd`*cheatsheet/hello.pd*`
+%pre
+%read cheatsheet/hello.pd
+
+%cheatsheet
+|%pre"%read cheatsheet/hello.pd"|%read cheatsheet/hello.pd
+|%pre"%include cheatsheet/hello.pd"|%include cheatsheet/hello.pd
+
 == Lists
 
 %cheatsheet
