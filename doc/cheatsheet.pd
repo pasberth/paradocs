@@ -10,7 +10,6 @@
   %after %"</tr>"
 
 %rule block cheatsheet tr left
-  %extend everywhere
   %extend inline
   %extend block
   %before %""<td class="left">""
@@ -18,7 +17,6 @@
   %def | %right
 
 %rule block cheatsheet tr right
-  %extend everywhere
   %extend inline
   %extend block
   %before %""<td class="right">""
