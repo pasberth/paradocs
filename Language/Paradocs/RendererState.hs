@@ -17,6 +17,7 @@ data Rendered
   | Blank String
   | Structure [Rendered]
   | Failure String RendererState
+  | Warning String RendererState
   | NoSuchFile FilePath RendererState
   deriving (Show)
 
@@ -86,6 +87,7 @@ renderedToString (Structure st) = join $ map renderedToString st--dropSpaces whe
   --dropSpaces = reverse $ dropWhile isBlank $ reverse $ dropWhile isBlank st
   --isBlank (Blank _) = True
   --isBlank _ = False
+renderedToString (Warning _ _) = ""
 renderedToString (Failure _ _) = ""
 renderedToString (NoSuchFile _ _) = ""
 renderedToString (Blank s) = s

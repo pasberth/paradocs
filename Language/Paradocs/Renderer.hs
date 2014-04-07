@@ -57,6 +57,11 @@ appendChar :: Monad m => Char -> RendererT m ()
 appendChar ch = do
   appendRendered $ Text [ch]
 
+warning :: Monad m => String -> RendererT m ()
+warning msg = do
+  s <- get
+  appendRendered $ Warning msg s
+
 failure :: Monad m => String -> RendererT m ()
 failure msg = do
   s <- get
@@ -297,13 +302,19 @@ renderExtendInstruction = do
         targetRuleName <- use defRuleName
         let absoluteRuleName = Token.toAbsoluteRuleName ruleNameTokens
         newRuleEnv <- uses ruleEnv (HashMap.adjust (ancestors %~ (absoluteRuleName:)) targetRuleName)
-        if RuleEnv.isCycle targetRuleName newRuleEnv
-          then do
-            workingFile . sourceToken .= Token.toString instructionToken
-            failure "cyclic inheritance detected"
-          else do
-            ruleEnv .= newRuleEnv
-        forM_ (instructionToken:ruleNameTokens) $ \_ -> dropToken
+        if
+          | RuleEnv.isCycle targetRuleName newRuleEnv -> do
+              workingFile . sourceToken .= Token.toString instructionToken
+              failure "cyclic inheritance detected"
+              forM_ (instructionToken:ruleNameTokens) $ \_ -> dropToken
+          | not $ HashMap.member absoluteRuleName newRuleEnv -> do
+              forM_ (instructionToken:takeWhile Token.isBlank ruleNameTokens) $ \_ -> dropToken
+              workingFile . sourceToken .= join (map Token.toString (dropWhile Token.isBlank ruleNameTokens))
+              warning "extending a not declared rule"
+              forM_ (dropWhile Token.isBlank ruleNameTokens) $ \_ -> dropToken
+          | otherwise -> do
+              ruleEnv .= newRuleEnv
+              forM_ (instructionToken:ruleNameTokens) $ \_ -> dropToken
       else do
         workingFile . sourceToken .= Token.toString instructionToken
         failure "the inheritance wasn't applied because the following errors occurred"

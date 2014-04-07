@@ -30,15 +30,15 @@ docHintLine file = do
                                     else (rest, "")
   Leijen.string preToken Leijen.<> Leijen.underline (Leijen.string tokenInLine) Leijen.<> Leijen.string postToken
 
-docFailure :: String -> RendererState -> Leijen.Doc
-docFailure msgStr renderState = do
+docMessage :: String -> Leijen.Doc -> RendererState -> Leijen.Doc
+docMessage msgStr label renderState = do
   let pos = docPosition (renderState ^. workingFile)
   let msg = boldString msgStr
   let hintLine = docHintLine (renderState ^. workingFile)
   let traceFiles = renderState ^.. fileStack . each . stackCallFile
   let traceDocs = map (\file -> Leijen.string "\t" Leijen.<>  docPosition file Leijen.<> docHintLine file Leijen.<> Leijen.linebreak) traceFiles
   let stacktrace = foldl (Leijen.<>) (Leijen.string "") traceDocs
-  let err = pos Leijen.<> docError Leijen.<> msg Leijen.<> Leijen.linebreak Leijen.<> hintLine Leijen.<> Leijen.linebreak
+  let err = pos Leijen.<> label Leijen.<> msg Leijen.<> Leijen.linebreak Leijen.<> hintLine Leijen.<> Leijen.linebreak
   err Leijen.<> Leijen.linebreak Leijen.<> stacktrace
 
 printASTErrors :: Rendered -> IO ()
@@ -46,6 +46,8 @@ printASTErrors (Text _) = return ()
 printASTErrors (Blank _) = return ()
 printASTErrors (Structure xs) = mapM_ printASTErrors xs
 printASTErrors (Failure msgStr renderState) = do
-  Leijen.hPutDoc System.stderr $ docFailure msgStr renderState
+  Leijen.hPutDoc System.stderr $ docMessage msgStr docError renderState
+printASTErrors (Warning msgStr renderState) = do
+  Leijen.hPutDoc System.stderr $ docMessage msgStr docWarning renderState
 printASTErrors (NoSuchFile path renderState) = do
-  Leijen.hPutDoc System.stderr $ docFailure ("no such file `" ++ path ++ "'") renderState
+  Leijen.hPutDoc System.stderr $ docMessage ("no such file `" ++ path ++ "'") docError renderState
