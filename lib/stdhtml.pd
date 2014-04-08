@@ -3,3 +3,4 @@
 %include stdhtml/section.pd
 %include stdhtml/html.pd
 %include stdhtml/styles.pd
+%include stdhtml/highlightjs.pd

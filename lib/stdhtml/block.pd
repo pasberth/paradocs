@@ -3,3 +3,5 @@
 %include block/pre.pd
 %include block/ul.pd
 %include block/table.pd
+%include block/frame.pd
+%include block/code-frame.pd

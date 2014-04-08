@@ -3,4 +3,8 @@
 %html
 %head
 :simple.css:
+%highlightjs
+%initHighlightingOnLoad
+%haskell
+%github.css
 %body

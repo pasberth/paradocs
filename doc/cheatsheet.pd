@@ -1,4 +1,4 @@
-%include ../lib/paradocs/html.pd
+%include ../lib/stdhtml.pd
 
 %rule block cheatsheet
   %before %""<table class="cheatsheet">""
@@ -23,27 +23,43 @@
   %after %""</td>""
   %def | %tr %left
 
+%html
+%head
+:simple.css:
+%style
+"""
+.cheatsheet {
+  width: 100%;
+}
+.left, .right {
+  width: 50%;
+  border-style: none;
+}
+"""
+%body
+
 = Paradocs cheatsheet
 
 == Formatted Text
 
 %cheatsheet
-|%pre"*bold*"|*bold*
-|%pre"_italic_"|_italic_
-|%pre"+monospace+"|+monospace+
-|%pre"super^script^"|super^script^
-|%pre"sub~script~"|sub~script~
-|%pre"*_bold italic_*"|*_bold italic_*
+|+"*bold*"+|*bold*
+|+"_italic_"+|_italic_
+|+"+monospace+"+|+monospace+
+|+"super^script^"+|super^script^
+|+"sub~script~"+|sub~script~
+|+"*_bold italic_*"+|*_bold italic_*
 
 == Links
 
 %cheatsheet
-|%pre"`cheatsheet.html`here`"|`cheatsheet.html`here`
+|+"`cheatsheet.html`here`"+|`cheatsheet.html`here`
 
 == Read & Include files
 
-`cheatsheet/hello.pd`*cheatsheet/hello.pd*`
-%pre
+%code-frame
+%title `cheatsheet/hello.pd`cheatsheet/hello.pd`
+%content
 %read cheatsheet/hello.pd
 
 %cheatsheet
@@ -58,8 +74,7 @@
 - item 1
 - item 2
 - item 3
-"""
-|%ul
+"""|%ul
 - item 1
 - item 2
 - item 3
@@ -74,25 +89,79 @@
 .|row 1|cell A1|cell B1|cell C1
 .|row 2|cell A2|cell B2|cell C2
 .|row 3|cell A3|cell B3|cell C3
-"""
-|%table
+"""|%table
 =||column A|column B|column C
 .|row 1|cell A1|cell B1|cell C1
 .|row 2|cell A2|cell B2|cell C2
 .|row 3|cell A3|cell B3|cell C3
+
+== Quoting Text
+
+=== Quoting macro characters
+
+%cheatsheet
+|%pre"""
+\*hello\*
+"""|\*hello\*
+|%pre"""
+"*hello*"
+"""|"*hello*"
+|%pre"""
+""
+*hello*
+""
+"""|""
+*hello*
+""
+
+=== Quoting Linebreaks
+
+%cheatsheet
+|%pre"""
+first line. \
+next line.
+"""|first line. \
+next line.
+|%pre"""
+""
+first line.
+next line.
+""
+"""|""
+first line.
+next line.
+""
+
+=== Quoting "`\\'"
+
+%cheatsheet
+|%pre"""
+\\
+"""|\\
+|%pre"""
+"\\"
+"""|"\\"
+
+=== Quoting "`\"'"
+
+%cheatsheet
+|%pre"""
+\"
+"""|\"
+|%pre"""
+"\""
+"""|"\""
 
 == Raw HTML
 
 %cheatsheet
 |%pre"""
 %"<strong>hello</strong>"
-"""
-|%"<strong>hello</strong>"
+"""|%"<strong>hello</strong>"
 |%pre"""
 %""
 <strong>hello</strong>
 ""
-"""
-|%""
+"""|%""
 <strong>hello</strong>
 ""
