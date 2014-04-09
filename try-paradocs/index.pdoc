@@ -2,6 +2,7 @@
 
 %html
 %head
+:simple.css:
 %""<script src="try-paradocs.jsexe/all.js"></script>""
 %"""
 <link rel="stylesheet" href="static/purecss/pure-min.css">
