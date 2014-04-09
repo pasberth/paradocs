@@ -23,7 +23,7 @@
     },
     {
       "begin": "%\"",
-      "end": "\"",
+      "end": "(?<!\\\\)\"",
       "name": "string.source.paradocs"
     },
     {
@@ -47,7 +47,7 @@
     },
     {
       "begin": "\"",
-      "end": "\"",
+      "end": "(?<!\\\\)\"",
       "name": "string.source.paradocs"
     },
     {
