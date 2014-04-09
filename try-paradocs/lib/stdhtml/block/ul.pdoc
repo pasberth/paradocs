@@ -1,0 +1,10 @@
+%rule block ul
+  %before %"<ul>"
+  %after %"</ul>"
+
+  %def - %li
+
+%rule block ul li
+  %extend inline
+  %before %"<li>"
+  %after %"</li>"

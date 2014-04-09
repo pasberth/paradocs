@@ -1,0 +1,134 @@
+code size summary per package:
+
+base:                    395667
+filepath-1.3.0.2:        22361
+ghc-prim:                19737
+ghcjs-base-0.1.0.0:      12916
+ghcjs-prim:              7896
+hashable-1.2.1.0:        6488
+integer-gmp:             3205
+lens-4.1.2:              3143
+main:                    29464
+paradocs-1.0.0:          407684
+split-0.2.2:             27935
+text-1.1.0.1:            3226
+transformers-0.3.0.0:    1006
+unordered-containers-0.2.3.3:55871
+
+
+code size per module:
+
+base
+    Control.Applicative:                6817
+    Control.Exception.Base:             13841
+    Control.Monad:                      249
+    Data.Functor:                       201
+    Data.List:                          2496
+    Data.Maybe:                         889
+    Data.Monoid:                        2367
+    Data.String:                        220
+    Data.Typeable:                      919
+    Data.Typeable.Internal:             1645
+    Foreign.C.Error:                    13059
+    Foreign.Marshal.Alloc:              1055
+    Foreign.Marshal.Array:              2536
+    Foreign.Storable:                   4085
+    GHC.Base:                           10516
+    GHC.Conc.Sync:                      5190
+    GHC.Enum:                           382
+    GHC.Err:                            638
+    GHC.Exception:                      6606
+    GHC.Foreign:                        11282
+    GHC.ForeignPtr:                     2379
+    GHC.IO:                             3775
+    GHC.IO.Buffer:                      1663
+    GHC.IO.BufferedIO:                  1239
+    GHC.IO.Device:                      2462
+    GHC.IO.Encoding:                    1481
+    GHC.IO.Encoding.Failure:            2003
+    GHC.IO.Encoding.Latin1:             2026
+    GHC.IO.Encoding.Types:              2036
+    GHC.IO.Encoding.UTF8:               63456
+    GHC.IO.Exception:                   33262
+    GHC.IO.FD:                          42906
+    GHC.IO.Handle:                      805
+    GHC.IO.Handle.FD:                   7343
+    GHC.IO.Handle.Internals:            35351
+    GHC.IO.Handle.Text:                 17161
+    GHC.IO.Handle.Types:                5686
+    GHC.IORef:                          894
+    GHC.Int:                            971
+    GHC.List:                           15250
+    GHC.MVar:                           259
+    GHC.Num:                            3661
+    GHC.Ptr:                            255
+    GHC.ST:                             233
+    GHC.STRef:                          830
+    GHC.Show:                           32118
+    GHC.Storable:                       1224
+    GHC.TopHandler:                     10239
+    GHC.Unicode:                        1116
+    GHC.Word:                           496
+    System.IO:                          613
+    System.Posix.Internals:             17481
+
+filepath-1.3.0.2
+    System.FilePath.Posix:              22361
+
+ghc-prim
+    GHC.CString:                        4517
+    GHC.Classes:                        12188
+    GHC.IntWord64:                      253
+    GHC.Tuple:                          885
+    GHC.Types:                          1894
+
+ghcjs-base-0.1.0.0
+    GHCJS.Foreign:                      12916
+
+ghcjs-prim
+    GHCJS.Prim:                         7409
+    GHCJS.Prim.Internal:                487
+
+hashable-1.2.1.0
+    Data.Hashable.Class:                6488
+
+integer-gmp
+    GHC.Integer.GMP.Prim:               311
+    GHC.Integer.Type:                   2894
+
+lens-4.1.2
+    Control.Lens.Each:                  2423
+    Control.Lens.Fold:                  295
+    Control.Lens.Getter:                425
+
+main
+    Main:                               29464
+
+paradocs-1.0.0
+    Language.Paradocs.File:             4663
+    Language.Paradocs.MonadStorage:     1206
+    Language.Paradocs.Renderer:         327352
+    Language.Paradocs.RendererState:    14110
+    Language.Paradocs.Rule:             4348
+    Language.Paradocs.RuleEnv:          10127
+    Language.Paradocs.Token:            45878
+
+split-0.2.2
+    Data.List.Split.Internals:          27935
+
+text-1.1.0.1
+    Data.Text.Array:                    1793
+    Data.Text.Internal:                 1433
+
+transformers-0.3.0.0
+    Data.Functor.Identity:              1006
+
+unordered-containers-0.2.3.3
+    Data.HashMap.Array:                 2146
+    Data.HashMap.Base:                  51506
+    Data.HashMap.Strict:                2219
+
+
+
+packed metadata: 125203
+

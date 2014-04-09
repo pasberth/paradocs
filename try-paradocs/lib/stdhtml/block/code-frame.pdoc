@@ -1,0 +1,13 @@
+%rule block code-frame
+  %before %""<div class="frame code-frame">""
+  %after %"</div>"
+
+%rule block code-frame title
+  %extend inline
+  %before %""<div class="title">""
+  %after %"</div>"
+
+%rule block code-frame content
+  %extend block pre
+  %before %""<div class="content"><pre>""
+  %after %"</pre></div>"

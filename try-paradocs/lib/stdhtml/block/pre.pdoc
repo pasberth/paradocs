@@ -1,0 +1,6 @@
+%rule block pre
+  %extend inline
+  %before       %"<pre>"
+  %after        %"</pre>"
+  %escape \
+                %"&#10;"
