@@ -1,6 +1,6 @@
 { "name": "Paradocs",
   "scopeName": "source.paradocs",
-  "fileTypes": ["pd"],
+  "fileTypes": ["pdoc"],
   "patterns": [
     {
       "match": "%\\\\.?",

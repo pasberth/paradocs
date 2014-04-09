@@ -1,0 +1,7 @@
+%rule block
+
+%include block/pre.pdoc
+%include block/ul.pdoc
+%include block/table.pdoc
+%include block/frame.pdoc
+%include block/code-frame.pdoc

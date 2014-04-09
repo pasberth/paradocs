@@ -1,0 +1,633 @@
+%rule html head highlightjs
+  %before %""<script src="http://yandex.st/highlightjs/8.0/highlight.min.js"></script>""
+
+%rule html head highlightjs initHighlightingOnLoad
+  %before %""<script type="text/javascript">hljs.initHighlightingOnLoad();</script>""
+
+%rule html head highlightjs 1c
+  %before %""<script src="http://yandex.st/highlightjs/8.0/languages/1c.min.js"></script>""
+
+%rule html head highlightjs actionscript
+  %before %""<script src="http://yandex.st/highlightjs/8.0/languages/actionscript.min.js"></script>""
+
+%rule html head highlightjs apache
+  %before %""<script src="http://yandex.st/highlightjs/8.0/languages/apache.min.js"></script>""
+
+%rule html head highlightjs applescript
+  %before %""<script src="http://yandex.st/highlightjs/8.0/languages/applescript.min.js"></script>""
+
+%rule html head highlightjs asciidoc
+  %before %""<script src="http://yandex.st/highlightjs/8.0/languages/asciidoc.min.js"></script>""
+
+%rule html head highlightjs autohotkey
+  %before %""<script src="http://yandex.st/highlightjs/8.0/languages/autohotkey.min.js"></script>""
+
+%rule html head highlightjs avrasm
+  %before %""<script src="http://yandex.st/highlightjs/8.0/languages/avrasm.min.js"></script>""
+
+%rule html head highlightjs axapta
+  %before %""<script src="http://yandex.st/highlightjs/8.0/languages/axapta.min.js"></script>""
+
+%rule html head highlightjs bash
+  %before %""<script src="http://yandex.st/highlightjs/8.0/languages/bash.min.js"></script>""
+
+%rule html head highlightjs brainfuck
+  %before %""<script src="http://yandex.st/highlightjs/8.0/languages/brainfuck.min.js"></script>""
+
+%rule html head highlightjs clojure
+  %before %""<script src="http://yandex.st/highlightjs/8.0/languages/clojure.min.js"></script>""
+
+%rule html head highlightjs cmake
+  %before %""<script src="http://yandex.st/highlightjs/8.0/languages/cmake.min.js"></script>""
+
+%rule html head highlightjs coffeescript
+  %before %""<script src="http://yandex.st/highlightjs/8.0/languages/coffeescript.min.js"></script>""
+
+%rule html head highlightjs cpp
+  %before %""<script src="http://yandex.st/highlightjs/8.0/languages/cpp.min.js"></script>""
+
+%rule html head highlightjs cs
+  %before %""<script src="http://yandex.st/highlightjs/8.0/languages/cs.min.js"></script>""
+
+%rule html head highlightjs css
+  %before %""<script src="http://yandex.st/highlightjs/8.0/languages/css.min.js"></script>""
+
+%rule html head highlightjs d
+  %before %""<script src="http://yandex.st/highlightjs/8.0/languages/d.min.js"></script>""
+
+%rule html head highlightjs delphi
+  %before %""<script src="http://yandex.st/highlightjs/8.0/languages/delphi.min.js"></script>""
+
+%rule html head highlightjs diff
+  %before %""<script src="http://yandex.st/highlightjs/8.0/languages/diff.min.js"></script>""
+
+%rule html head highlightjs django
+  %before %""<script src="http://yandex.st/highlightjs/8.0/languages/django.min.js"></script>""
+
+%rule html head highlightjs dos
+  %before %""<script src="http://yandex.st/highlightjs/8.0/languages/dos.min.js"></script>""
+
+%rule html head highlightjs erlang-repl
+  %before %""<script src="http://yandex.st/highlightjs/8.0/languages/erlang-repl.min.js"></script>""
+
+%rule html head highlightjs erlang
+  %before %""<script src="http://yandex.st/highlightjs/8.0/languages/erlang.min.js"></script>""
+
+%rule html head highlightjs fix
+  %before %""<script src="http://yandex.st/highlightjs/8.0/languages/fix.min.js"></script>""
+
+%rule html head highlightjs fsharp
+  %before %""<script src="http://yandex.st/highlightjs/8.0/languages/fsharp.min.js"></script>""
+
+%rule html head highlightjs glsl
+  %before %""<script src="http://yandex.st/highlightjs/8.0/languages/glsl.min.js"></script>""
+
+%rule html head highlightjs go
+  %before %""<script src="http://yandex.st/highlightjs/8.0/languages/go.min.js"></script>""
+
+%rule html head highlightjs haml
+  %before %""<script src="http://yandex.st/highlightjs/8.0/languages/haml.min.js"></script>""
+
+%rule html head highlightjs handlebars
+  %before %""<script src="http://yandex.st/highlightjs/8.0/languages/handlebars.min.js"></script>""
+
+%rule html head highlightjs haskell
+  %before %""<script src="http://yandex.st/highlightjs/8.0/languages/haskell.min.js"></script>""
+
+%rule html head highlightjs http
+  %before %""<script src="http://yandex.st/highlightjs/8.0/languages/http.min.js"></script>""
+
+%rule html head highlightjs ini
+  %before %""<script src="http://yandex.st/highlightjs/8.0/languages/ini.min.js"></script>""
+
+%rule html head highlightjs java
+  %before %""<script src="http://yandex.st/highlightjs/8.0/languages/java.min.js"></script>""
+
+%rule html head highlightjs javascript
+  %before %""<script src="http://yandex.st/highlightjs/8.0/languages/javascript.min.js"></script>""
+
+%rule html head highlightjs json
+  %before %""<script src="http://yandex.st/highlightjs/8.0/languages/json.min.js"></script>""
+
+%rule html head highlightjs lasso
+  %before %""<script src="http://yandex.st/highlightjs/8.0/languages/lasso.min.js"></script>""
+
+%rule html head highlightjs lisp
+  %before %""<script src="http://yandex.st/highlightjs/8.0/languages/lisp.min.js"></script>""
+
+%rule html head highlightjs livecodeserver
+  %before %""<script src="http://yandex.st/highlightjs/8.0/languages/livecodeserver.min.js"></script>""
+
+%rule html head highlightjs lua
+  %before %""<script src="http://yandex.st/highlightjs/8.0/languages/lua.min.js"></script>""
+
+%rule html head highlightjs makefile
+  %before %""<script src="http://yandex.st/highlightjs/8.0/languages/makefile.min.js"></script>""
+
+%rule html head highlightjs markdown
+  %before %""<script src="http://yandex.st/highlightjs/8.0/languages/markdown.min.js"></script>""
+
+%rule html head highlightjs mathematica
+  %before %""<script src="http://yandex.st/highlightjs/8.0/languages/mathematica.min.js"></script>""
+
+%rule html head highlightjs matlab
+  %before %""<script src="http://yandex.st/highlightjs/8.0/languages/matlab.min.js"></script>""
+
+%rule html head highlightjs mel
+  %before %""<script src="http://yandex.st/highlightjs/8.0/languages/mel.min.js"></script>""
+
+%rule html head highlightjs mizar
+  %before %""<script src="http://yandex.st/highlightjs/8.0/languages/mizar.min.js"></script>""
+
+%rule html head highlightjs nginx
+  %before %""<script src="http://yandex.st/highlightjs/8.0/languages/nginx.min.js"></script>""
+
+%rule html head highlightjs objectivec
+  %before %""<script src="http://yandex.st/highlightjs/8.0/languages/objectivec.min.js"></script>""
+
+%rule html head highlightjs ocaml
+  %before %""<script src="http://yandex.st/highlightjs/8.0/languages/ocaml.min.js"></script>""
+
+%rule html head highlightjs oxygene
+  %before %""<script src="http://yandex.st/highlightjs/8.0/languages/oxygene.min.js"></script>""
+
+%rule html head highlightjs parser3
+  %before %""<script src="http://yandex.st/highlightjs/8.0/languages/parser3.min.js"></script>""
+
+%rule html head highlightjs perl
+  %before %""<script src="http://yandex.st/highlightjs/8.0/languages/perl.min.js"></script>""
+
+%rule html head highlightjs php
+  %before %""<script src="http://yandex.st/highlightjs/8.0/languages/php.min.js"></script>""
+
+%rule html head highlightjs profile
+  %before %""<script src="http://yandex.st/highlightjs/8.0/languages/profile.min.js"></script>""
+
+%rule html head highlightjs python
+  %before %""<script src="http://yandex.st/highlightjs/8.0/languages/python.min.js"></script>""
+
+%rule html head highlightjs r
+  %before %""<script src="http://yandex.st/highlightjs/8.0/languages/r.min.js"></script>""
+
+%rule html head highlightjs rib
+  %before %""<script src="http://yandex.st/highlightjs/8.0/languages/rib.min.js"></script>""
+
+%rule html head highlightjs rsl
+  %before %""<script src="http://yandex.st/highlightjs/8.0/languages/rsl.min.js"></script>""
+
+%rule html head highlightjs ruby
+  %before %""<script src="http://yandex.st/highlightjs/8.0/languages/ruby.min.js"></script>""
+
+%rule html head highlightjs ruleslanguage
+  %before %""<script src="http://yandex.st/highlightjs/8.0/languages/ruleslanguage.min.js"></script>""
+
+%rule html head highlightjs rust
+  %before %""<script src="http://yandex.st/highlightjs/8.0/languages/rust.min.js"></script>""
+
+%rule html head highlightjs scala
+  %before %""<script src="http://yandex.st/highlightjs/8.0/languages/scala.min.js"></script>""
+
+%rule html head highlightjs scilab
+  %before %""<script src="http://yandex.st/highlightjs/8.0/languages/scilab.min.js"></script>""
+
+%rule html head highlightjs scss
+  %before %""<script src="http://yandex.st/highlightjs/8.0/languages/scss.min.js"></script>""
+
+%rule html head highlightjs smalltalk
+  %before %""<script src="http://yandex.st/highlightjs/8.0/languages/smalltalk.min.js"></script>""
+
+%rule html head highlightjs sql
+  %before %""<script src="http://yandex.st/highlightjs/8.0/languages/sql.min.js"></script>""
+
+%rule html head highlightjs tex
+  %before %""<script src="http://yandex.st/highlightjs/8.0/languages/tex.min.js"></script>""
+
+%rule html head highlightjs vala
+  %before %""<script src="http://yandex.st/highlightjs/8.0/languages/vala.min.js"></script>""
+
+%rule html head highlightjs vbnet
+  %before %""<script src="http://yandex.st/highlightjs/8.0/languages/vbnet.min.js"></script>""
+
+%rule html head highlightjs vbscript
+  %before %""<script src="http://yandex.st/highlightjs/8.0/languages/vbscript.min.js"></script>""
+
+%rule html head highlightjs vhdl
+  %before %""<script src="http://yandex.st/highlightjs/8.0/languages/vhdl.min.js"></script>""
+
+%rule html head highlightjs xml
+  %before %""<script src="http://yandex.st/highlightjs/8.0/languages/xml.min.js"></script>""
+
+%rule html head highlightjs arta.css
+  %before %""<link rel="stylesheet" href="http://yandex.st/highlightjs/8.0/styles/arta.min.css">""
+
+%rule html head highlightjs ascetic.css
+  %before %""<link rel="stylesheet" href="http://yandex.st/highlightjs/8.0/styles/ascetic.min.css">""
+
+%rule html head highlightjs brown_paper.css
+  %before %""<link rel="stylesheet" href="http://yandex.st/highlightjs/8.0/styles/brown_paper.min.css">""
+
+%rule html head highlightjs dark.css
+  %before %""<link rel="stylesheet" href="http://yandex.st/highlightjs/8.0/styles/dark.min.css">""
+
+%rule html head highlightjs default.css
+  %before %""<link rel="stylesheet" href="http://yandex.st/highlightjs/8.0/styles/default.min.css">""
+
+%rule html head highlightjs far.css
+  %before %""<link rel="stylesheet" href="http://yandex.st/highlightjs/8.0/styles/far.min.css">""
+
+%rule html head highlightjs github.css
+  %before %""<link rel="stylesheet" href="http://yandex.st/highlightjs/8.0/styles/github.min.css">""
+
+%rule html head highlightjs googlecode.css
+  %before %""<link rel="stylesheet" href="http://yandex.st/highlightjs/8.0/styles/googlecode.min.css">""
+
+%rule html head highlightjs idea.css
+  %before %""<link rel="stylesheet" href="http://yandex.st/highlightjs/8.0/styles/idea.min.css">""
+
+%rule html head highlightjs ir_black.css
+  %before %""<link rel="stylesheet" href="http://yandex.st/highlightjs/8.0/styles/ir_black.min.css">""
+
+%rule html head highlightjs magula.css
+  %before %""<link rel="stylesheet" href="http://yandex.st/highlightjs/8.0/styles/magula.min.css">""
+
+%rule html head highlightjs monokai.css
+  %before %""<link rel="stylesheet" href="http://yandex.st/highlightjs/8.0/styles/monokai.min.css">""
+
+%rule html head highlightjs pojoaque.css
+  %before %""<link rel="stylesheet" href="http://yandex.st/highlightjs/8.0/styles/pojoaque.min.css">""
+
+%rule html head highlightjs school_book.css
+  %before %""<link rel="stylesheet" href="http://yandex.st/highlightjs/8.0/styles/school_book.min.css">""
+
+%rule html head highlightjs solarized_dark.css
+  %before %""<link rel="stylesheet" href="http://yandex.st/highlightjs/8.0/styles/solarized_dark.min.css">""
+
+%rule html head highlightjs solarized_light.css
+  %before %""<link rel="stylesheet" href=http://yandex.st/highlightjs/8.0/styles/solarized_light.min.css">""
+
+%rule html head highlightjs sunburst.css
+  %before %""<link rel="stylesheet" href="http://yandex.st/highlightjs/8.0/styles/sunburst.min.css">""
+
+%rule html head highlightjs vs.css
+  %before %""<link rel="stylesheet" href="http://yandex.st/highlightjs/8.0/styles/vs.min.css">""
+
+%rule html head highlightjs xcode.css
+  %before %""<link rel="stylesheet" href="http://yandex.st/highlightjs/8.0/styles/xcode.min.css">""
+
+%rule html head highlightjs zenburn.css
+  %before %""<link rel="stylesheet" href="http://yandex.st/highlightjs/8.0/styles/zenburn.min.css">""
+
+%rule block pre 1c
+  %extend inline
+  %before %""<code class="1c language-1c">""
+  %after %"</code>"
+
+%rule block pre actionscript
+  %extend inline
+  %before %""<code class="actionscript language-actionscript">""
+  %after %"</code>"
+
+%rule block pre apache
+  %extend inline
+  %before %""<code class="apache language-apache">""
+  %after %"</code>"
+
+%rule block pre applescript
+  %extend inline
+  %before %""<code class="applescript language-applescript">""
+  %after %"</code>"
+
+%rule block pre asciidoc
+  %extend inline
+  %before %""<code class="asciidoc language-asciidoc">""
+  %after %"</code>"
+
+%rule block pre autohotkey
+  %extend inline
+  %before %""<code class="autohotkey language-autohotkey">""
+  %after %"</code>"
+
+%rule block pre avrasm
+  %extend inline
+  %before %""<code class="avrasm language-avrasm">""
+  %after %"</code>"
+
+%rule block pre axapta
+  %extend inline
+  %before %""<code class="axapta language-axapta">""
+  %after %"</code>"
+
+%rule block pre bash
+  %extend inline
+  %before %""<code class="bash language-bash">""
+  %after %"</code>"
+
+%rule block pre brainfuck
+  %extend inline
+  %before %""<code class="brainfuck language-brainfuck">""
+  %after %"</code>"
+
+%rule block pre clojure
+  %extend inline
+  %before %""<code class="clojure language-clojure">""
+  %after %"</code>"
+
+%rule block pre cmake
+  %extend inline
+  %before %""<code class="cmake language-cmake">""
+  %after %"</code>"
+
+%rule block pre coffeescript
+  %extend inline
+  %before %""<code class="coffeescript language-coffeescript">""
+  %after %"</code>"
+
+%rule block pre cpp
+  %extend inline
+  %before %""<code class="cpp language-cpp">""
+  %after %"</code>"
+
+%rule block pre cs
+  %extend inline
+  %before %""<code class="cs language-cs">""
+  %after %"</code>"
+
+%rule block pre css
+  %extend inline
+  %before %""<code class="css language-css">""
+  %after %"</code>"
+
+%rule block pre d
+  %extend inline
+  %before %""<code class="d language-d">""
+  %after %"</code>"
+
+%rule block pre delphi
+  %extend inline
+  %before %""<code class="delphi language-delphi">""
+  %after %"</code>"
+
+%rule block pre diff
+  %extend inline
+  %before %""<code class="diff language-diff">""
+  %after %"</code>"
+
+%rule block pre django
+  %extend inline
+  %before %""<code class="django language-django">""
+  %after %"</code>"
+
+%rule block pre dos
+  %extend inline
+  %before %""<code class="dos language-dos">""
+  %after %"</code>"
+
+%rule block pre erlang-repl
+  %extend inline
+  %before %""<code class="erlang-repl language-erlang-repl">""
+  %after %"</code>"
+
+%rule block pre erlang
+  %extend inline
+  %before %""<code class="erlang language-erlang">""
+  %after %"</code>"
+
+%rule block pre fix
+  %extend inline
+  %before %""<code class="fix language-fix">""
+  %after %"</code>"
+
+%rule block pre fsharp
+  %extend inline
+  %before %""<code class="fsharp language-fsharp">""
+  %after %"</code>"
+
+%rule block pre glsl
+  %extend inline
+  %before %""<code class="glsl language-glsl">""
+  %after %"</code>"
+
+%rule block pre go
+  %extend inline
+  %before %""<code class="go language-go">""
+  %after %"</code>"
+
+%rule block pre haml
+  %extend inline
+  %before %""<code class="haml language-haml">""
+  %after %"</code>"
+
+%rule block pre handlebars
+  %extend inline
+  %before %""<code class="handlebars language-handlebars">""
+  %after %"</code>"
+
+%rule block pre haskell
+  %extend inline
+  %before %""<code class="haskell language-haskell">""
+  %after %"</code>"
+
+%rule block pre http
+  %extend inline
+  %before %""<code class="http language-http">""
+  %after %"</code>"
+
+%rule block pre ini
+  %extend inline
+  %before %""<code class="ini language-ini">""
+  %after %"</code>"
+
+%rule block pre java
+  %extend inline
+  %before %""<code class="java language-java">""
+  %after %"</code>"
+
+%rule block pre javascript
+  %extend inline
+  %before %""<code class="javascript language-javascript">""
+  %after %"</code>"
+
+%rule block pre json
+  %extend inline
+  %before %""<code class="json language-json">""
+  %after %"</code>"
+
+%rule block pre lasso
+  %extend inline
+  %before %""<code class="lasso language-lasso">""
+  %after %"</code>"
+
+%rule block pre lisp
+  %extend inline
+  %before %""<code class="lisp language-lisp">""
+  %after %"</code>"
+
+%rule block pre livecodeserver
+  %extend inline
+  %before %""<code class="livecodeserver language-livecodeserver">""
+  %after %"</code>"
+
+%rule block pre lua
+  %extend inline
+  %before %""<code class="lua language-lua">""
+  %after %"</code>"
+
+%rule block pre makefile
+  %extend inline
+  %before %""<code class="makefile language-makefile">""
+  %after %"</code>"
+
+%rule block pre markdown
+  %extend inline
+  %before %""<code class="markdown language-markdown">""
+  %after %"</code>"
+
+%rule block pre mathematica
+  %extend inline
+  %before %""<code class="mathematica language-mathematica">""
+  %after %"</code>"
+
+%rule block pre matlab
+  %extend inline
+  %before %""<code class="matlab language-matlab">""
+  %after %"</code>"
+
+%rule block pre mel
+  %extend inline
+  %before %""<code class="mel language-mel">""
+  %after %"</code>"
+
+%rule block pre mizar
+  %extend inline
+  %before %""<code class="mizar language-mizar">""
+  %after %"</code>"
+
+%rule block pre nginx
+  %extend inline
+  %before %""<code class="nginx language-nginx">""
+  %after %"</code>"
+
+%rule block pre objectivec
+  %extend inline
+  %before %""<code class="objectivec language-objectivec">""
+  %after %"</code>"
+
+%rule block pre ocaml
+  %extend inline
+  %before %""<code class="ocaml language-ocaml">""
+  %after %"</code>"
+
+%rule block pre oxygene
+  %extend inline
+  %before %""<code class="oxygene language-oxygene">""
+  %after %"</code>"
+
+%rule block pre parser3
+  %extend inline
+  %before %""<code class="parser3 language-parser3">""
+  %after %"</code>"
+
+%rule block pre perl
+  %extend inline
+  %before %""<code class="perl language-perl">""
+  %after %"</code>"
+
+%rule block pre php
+  %extend inline
+  %before %""<code class="php language-php">""
+  %after %"</code>"
+
+%rule block pre profile
+  %extend inline
+  %before %""<code class="profile language-profile">""
+  %after %"</code>"
+
+%rule block pre python
+  %extend inline
+  %before %""<code class="python language-python">""
+  %after %"</code>"
+
+%rule block pre r
+  %extend inline
+  %before %""<code class="r language-r">""
+  %after %"</code>"
+
+%rule block pre rib
+  %extend inline
+  %before %""<code class="rib language-rib">""
+  %after %"</code>"
+
+%rule block pre rsl
+  %extend inline
+  %before %""<code class="rsl language-rsl">""
+  %after %"</code>"
+
+%rule block pre ruby
+  %extend inline
+  %before %""<code class="ruby language-ruby">""
+  %after %"</code>"
+
+%rule block pre ruleslanguage
+  %extend inline
+  %before %""<code class="ruleslanguage language-ruleslanguage">""
+  %after %"</code>"
+
+%rule block pre rust
+  %extend inline
+  %before %""<code class="rust language-rust">""
+  %after %"</code>"
+
+%rule block pre scala
+  %extend inline
+  %before %""<code class="scala language-scala">""
+  %after %"</code>"
+
+%rule block pre scilab
+  %extend inline
+  %before %""<code class="scilab language-scilab">""
+  %after %"</code>"
+
+%rule block pre scss
+  %extend inline
+  %before %""<code class="scss language-scss">""
+  %after %"</code>"
+
+%rule block pre smalltalk
+  %extend inline
+  %before %""<code class="smalltalk language-smalltalk">""
+  %after %"</code>"
+
+%rule block pre sql
+  %extend inline
+  %before %""<code class="sql language-sql">""
+  %after %"</code>"
+
+%rule block pre tex
+  %extend inline
+  %before %""<code class="tex language-tex">""
+  %after %"</code>"
+
+%rule block pre vala
+  %extend inline
+  %before %""<code class="vala language-vala">""
+  %after %"</code>"
+
+%rule block pre vbnet
+  %extend inline
+  %before %""<code class="vbnet language-vbnet">""
+  %after %"</code>"
+
+%rule block pre vbscript
+  %extend inline
+  %before %""<code class="vbscript language-vbscript">""
+  %after %"</code>"
+
+%rule block pre vhdl
+  %extend inline
+  %before %""<code class="vhdl language-vhdl">""
+  %after %"</code>"
+
+%rule block pre xml
+  %extend inline
+  %before %""<code class="xml language-xml">""
+  %after %"</code>"

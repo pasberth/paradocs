@@ -1,4 +1,4 @@
-%include ../stdhtml.pd
+%include ../stdhtml.pdoc
 
 %html
 %head

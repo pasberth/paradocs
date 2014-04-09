@@ -4,7 +4,7 @@
 <dict>
 	<key>fileTypes</key>
 	<array>
-		<string>pd</string>
+		<string>pdoc</string>
 	</array>
 	<key>name</key>
 	<string>Paradocs</string>

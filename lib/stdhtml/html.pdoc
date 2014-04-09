@@ -9,5 +9,5 @@
   %escape \
                 %"<br />"
 
-%include html/head.pd
-%include html/body.pd
+%include html/head.pdoc
+%include html/body.pdoc

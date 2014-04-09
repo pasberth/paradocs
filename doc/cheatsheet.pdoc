@@ -1,4 +1,4 @@
-%include ../lib/stdhtml.pd
+%include ../lib/stdhtml.pdoc
 
 %rule block cheatsheet
   %before %""<table class="cheatsheet">""
@@ -58,13 +58,13 @@
 == Read & Include files
 
 %code-frame
-%title `cheatsheet/hello.pd`cheatsheet/hello.pd`
+%title `cheatsheet/hello.pdoc`cheatsheet/hello.pdoc`
 %content
-%read cheatsheet/hello.pd
+%read cheatsheet/hello.pdoc
 
 %cheatsheet
-|%pre"%read cheatsheet/hello.pd"|%read cheatsheet/hello.pd
-|%pre"%include cheatsheet/hello.pd"|%include cheatsheet/hello.pd
+|%pre"%read cheatsheet/hello.pdoc"|%read cheatsheet/hello.pdoc
+|%pre"%include cheatsheet/hello.pdoc"|%include cheatsheet/hello.pdoc
 
 == Lists
 
