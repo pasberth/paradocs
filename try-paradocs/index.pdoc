@@ -27,6 +27,8 @@ h$main(h$mainZCMainzimain);
 :simple.css:
 %body
 
+= Try Paradocs
+
 %""
 <textarea id="input">
 %include lib/stdhtml.pdoc
