@@ -1,6 +1,0 @@
-%include stdhtml/inline.pdoc
-%include stdhtml/block.pdoc
-%include stdhtml/section.pdoc
-%include stdhtml/html.pdoc
-%include stdhtml/styles.pdoc
-%include stdhtml/highlightjs.pdoc

@@ -1,4 +1,0 @@
-%rule html body
-  %extend sections
-  %before %"<body>"
-  %after %"</body>"
