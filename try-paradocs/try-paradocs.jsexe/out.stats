@@ -1,0 +1,218 @@
+code size summary per package:
+
+aeson-0.7.0.2:           17488
+ansi-terminal-0.6.1.1:   14174
+ansi-wl-pprint-0.6.7.1:  42686
+base:                    655541
+comonad-4.0.1:           1369
+contravariant-0.4.4:     774
+control-bool-0.2.1:      1857
+control-monad-loop-0.1:  5248
+directory-1.2.0.2:       1842
+distributive-0.4.3.1:    4544
+filepath-1.3.0.2:        23167
+ghc-prim:                30078
+ghcjs-base-0.1.0.0:      31131
+ghcjs-prim:              7912
+hashable-1.2.1.0:        4228
+integer-gmp:             38735
+lens-4.1.2:              18885
+main:                    443850
+mtl-2.1.3.1:             5542
+profunctors-4.0.3:       12750
+scientific-0.2.0.2:      7256
+split-0.2.2:             27935
+text-1.1.0.1:            4930
+transformers-0.3.0.0:    43526
+unordered-containers-0.2.3.3:93060
+vector-0.10.9.1:         2965
+void-0.6.1:              837
+
+
+code size per module:
+
+aeson-0.7.0.2
+    Data.Aeson.Types.Internal:          17488
+
+ansi-terminal-0.6.1.1
+    System.Console.ANSI.Common:         5535
+    System.Console.ANSI.Unix:           8639
+
+ansi-wl-pprint-0.6.7.1
+    Text.PrettyPrint.ANSI.Leijen:       42686
+
+base
+    Control.Applicative:                15936
+    Control.Arrow:                      10016
+    Control.Category:                   1199
+    Control.Exception.Base:             15359
+    Control.Monad:                      1944
+    Control.Monad.Fix:                  350
+    Data.Either:                        1605
+    Data.Foldable:                      361
+    Data.Functor:                       201
+    Data.List:                          3199
+    Data.Maybe:                         3102
+    Data.Monoid:                        3164
+    Data.String:                        684
+    Data.Traversable:                   379
+    Data.Tuple:                         550
+    Data.Typeable:                      919
+    Data.Typeable.Internal:             1645
+    Foreign.C.Error:                    13059
+    Foreign.Marshal.Alloc:              1055
+    Foreign.Marshal.Array:              2536
+    Foreign.Storable:                   4085
+    GHC.Arr:                            4598
+    GHC.Base:                           11450
+    GHC.Conc.Sync:                      5190
+    GHC.Enum:                           11875
+    GHC.Err:                            638
+    GHC.Exception:                      17661
+    GHC.Float:                          76778
+    GHC.Float.ConversionUtils:          3823
+    GHC.Foreign:                        11282
+    GHC.ForeignPtr:                     2379
+    GHC.IO:                             4602
+    GHC.IO.Buffer:                      1663
+    GHC.IO.BufferedIO:                  1526
+    GHC.IO.Device:                      2710
+    GHC.IO.Encoding:                    1481
+    GHC.IO.Encoding.Failure:            2003
+    GHC.IO.Encoding.Latin1:             4023
+    GHC.IO.Encoding.Types:              2036
+    GHC.IO.Encoding.UTF8:               63456
+    GHC.IO.Exception:                   33517
+    GHC.IO.FD:                          56888
+    GHC.IO.Handle:                      805
+    GHC.IO.Handle.FD:                   15749
+    GHC.IO.Handle.Internals:            66578
+    GHC.IO.Handle.Text:                 32426
+    GHC.IO.Handle.Types:                8140
+    GHC.IO.IOMode:                      249
+    GHC.Int:                            975
+    GHC.List:                           19501
+    GHC.MVar:                           259
+    GHC.Num:                            5416
+    GHC.Ptr:                            255
+    GHC.Real:                           32538
+    GHC.ST:                             235
+    GHC.STRef:                          269
+    GHC.Show:                           39522
+    GHC.Storable:                       1234
+    GHC.TopHandler:                     10339
+    GHC.Unicode:                        1118
+    GHC.Word:                           496
+    System.IO:                          651
+    System.Posix.Internals:             17859
+
+comonad-4.0.1
+    Control.Comonad:                    1369
+
+contravariant-0.4.4
+    Data.Functor.Contravariant:         774
+
+control-bool-0.2.1
+    Control.Bool:                       1857
+
+control-monad-loop-0.1
+    Control.Monad.Trans.Loop:           5248
+
+directory-1.2.0.2
+    System.Directory:                   1842
+
+distributive-0.4.3.1
+    Data.Distributive:                  4544
+
+filepath-1.3.0.2
+    System.FilePath.Posix:              23167
+
+ghc-prim
+    GHC.CString:                        4517
+    GHC.Classes:                        21136
+    GHC.IntWord64:                      524
+    GHC.Tuple:                          1252
+    GHC.Types:                          2649
+
+ghcjs-base-0.1.0.0
+    GHCJS.Foreign:                      12292
+    GHCJS.Marshal:                      18839
+
+ghcjs-prim
+    GHCJS.Prim:                         7425
+    GHCJS.Prim.Internal:                487
+
+hashable-1.2.1.0
+    Data.Hashable.Class:                4228
+
+integer-gmp
+    GHC.Integer.GMP.Prim:               922
+    GHC.Integer.Logarithms.Internals:   7138
+    GHC.Integer.Type:                   30675
+
+lens-4.1.2
+    Control.Lens.At:                    4897
+    Control.Lens.Each:                  2441
+    Control.Lens.Fold:                  295
+    Control.Lens.Getter:                3327
+    Control.Lens.Internal.Getter:       516
+    Control.Lens.Internal.Indexed:      2792
+    Control.Lens.Lens:                  205
+    Control.Lens.Setter:                4412
+
+main
+    Language.Paradocs.File:             17581
+    Language.Paradocs.MonadStorage:     9523
+    Language.Paradocs.PrettyPrint:      17090
+    Language.Paradocs.Renderer:         238429
+    Language.Paradocs.RendererState:    50528
+    Language.Paradocs.Rule:             15919
+    Language.Paradocs.RuleEnv:          8403
+    Language.Paradocs.RuleName:         179
+    Language.Paradocs.Token:            52193
+    Main:                               34005
+
+mtl-2.1.3.1
+    Control.Monad.Reader.Class:         2419
+    Control.Monad.State.Class:          3123
+
+profunctors-4.0.3
+    Data.Profunctor:                    4422
+    Data.Profunctor.Rep:                4479
+    Data.Profunctor.Unsafe:             3849
+
+scientific-0.2.0.2
+    Data.Scientific:                    7256
+
+split-0.2.2
+    Data.List.Split.Internals:          27935
+
+text-1.1.0.1
+    Data.Text:                          1704
+    Data.Text.Array:                    1793
+    Data.Text.Internal:                 1433
+
+transformers-0.3.0.0
+    Control.Monad.Trans.Class:          271
+    Control.Monad.Trans.Reader:         12986
+    Control.Monad.Trans.State.Lazy:     18678
+    Data.Functor.Identity:              11591
+
+unordered-containers-0.2.3.3
+    Data.HashMap.Array:                 2146
+    Data.HashMap.Base:                  79654
+    Data.HashMap.Strict:                9136
+    Data.HashSet:                       2124
+
+vector-0.10.9.1
+    Data.Vector:                        992
+    Data.Vector.Fusion.Stream.Monadic:  414
+    Data.Vector.Mutable:                1559
+
+void-0.6.1
+    Data.Void:                          837
+
+
+
+packed metadata: 231430
+
