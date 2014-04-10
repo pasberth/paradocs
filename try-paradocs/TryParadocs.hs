@@ -31,21 +31,6 @@ foreign import javascript unsafe "var req=new XMLHttpRequest();req.open('GET',$1
 foreign import javascript unsafe "$2.innerHTML = $1" setInnerHTML :: JSString -> (JSRef DOM) -> IO ()
 foreign import javascript unsafe "JSON.parse($1)" parseJSON :: JSString -> JSRef Aeson.Value
 
-newtype JavaScriptStorage a
-  = JavaScriptStorage
-    {
-      unJavaScriptStorage :: ReaderT (HashMap.HashMap String String) IO a
-    }
-  deriving (Functor, Applicative, Monad, MonadReader (HashMap.HashMap String String))
-
-runJavaScriptStorage :: JavaScriptStorage a -> HashMap.HashMap String String -> IO a
-runJavaScriptStorage = runReaderT . unJavaScriptStorage
-
-instance MonadStorage JavaScriptStorage where
-  maybeReadFile path = do
-    storage <- ask
-    return $ HashMap.lookup path storage
-
 htmlError :: String
 htmlError = "<span class='error'>error: </span>"
 
@@ -107,7 +92,7 @@ main = do
     onclickCallback <- syncCallback AlwaysRetain True $ do
       setInnerHTML (toJSString "少女 rendering...") view
       val <- getValue editor
-      rendered <- runJavaScriptStorage (renderString (fromJSString val)) libStorage
+      let rendered = runHashMapStorage (renderString (fromJSString val)) libStorage
       let s = renderedToString rendered
       let err = htmlASTErrors rendered
       setInnerHTML (toJSString (err ++ s)) view
