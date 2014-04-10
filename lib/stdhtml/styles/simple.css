@@ -22,6 +22,10 @@ h2 {
   border-bottom: 1px solid #cccccc;
 }
 
+p {
+  line-height: 1.6;
+}
+
 pre, code {
   font-family: "Source Code Pro", "Bitstream Vera Sans Mono", "Consolas", "Liberation Mono", Courier, monospace;
 }
