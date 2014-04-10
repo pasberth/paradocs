@@ -1,18 +1,23 @@
 {-# LANGUAGE JavaScriptFFI              #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE LambdaCase #-}
 
-import Data.Char
 import           GHCJS.Foreign
 import           GHCJS.Marshal
 import           GHCJS.Types
 import           Control.Applicative
 import           Control.Monad
+import           Control.Monad.Reader
 import           Control.Lens
 import           Language.Paradocs
 import           Language.Paradocs.Types
 import           Language.Paradocs.RendererState
 import           Language.Paradocs.MonadStorage
-import           Data.IORef
+import qualified Data.IORef                       as IORef
+import qualified Data.Maybe                       as Maybe
+import qualified Data.Aeson                       as Aeson
+import qualified Data.HashMap.Strict              as HashMap
+import qualified Data.Text                        as Text
 
 data DOM
 data Editor
@@ -22,27 +27,24 @@ foreign import javascript unsafe "CodeMirror.fromTextArea(document.getElementByI
 foreign import javascript unsafe "document.getElementById($1)" getElementById :: JSString -> IO (JSRef DOM)
 foreign import javascript unsafe "$2.onclick = $1" onclick :: (JSFun (IO a)) -> (JSRef DOM) -> IO ()
 foreign import javascript unsafe "$1.doc.getValue()" getValue :: (JSRef Editor) -> IO JSString
-foreign import javascript unsafe "var req=new XMLHttpRequest();req.open('GET',$1);try{req.send();$r=true} catch (e){$r=false;}" available :: JSString -> IO JSBool
 foreign import javascript unsafe "var req=new XMLHttpRequest();req.open('GET',$1,false);req.send();$r = req.responseText;" get :: JSString -> IO JSString
 foreign import javascript unsafe "$2.innerHTML = $1" setInnerHTML :: JSString -> (JSRef DOM) -> IO ()
+foreign import javascript unsafe "JSON.parse($1)" parseJSON :: JSString -> JSRef Aeson.Value
 
 newtype JavaScriptStorage a
-  = JavaScriptStorage (IO a)
-  deriving (Functor, Applicative, Monad)
+  = JavaScriptStorage
+    {
+      unJavaScriptStorage :: ReaderT (HashMap.HashMap String String) IO a
+    }
+  deriving (Functor, Applicative, Monad, MonadReader (HashMap.HashMap String String))
 
-runJavaScriptStorage :: JavaScriptStorage a -> IO a
-runJavaScriptStorage (JavaScriptStorage m) = m
+runJavaScriptStorage :: JavaScriptStorage a -> HashMap.HashMap String String -> IO a
+runJavaScriptStorage = runReaderT . unJavaScriptStorage
 
 instance MonadStorage JavaScriptStorage where
-  maybeReadFile path = JavaScriptStorage $ do
-    print path
-    let jspath = toJSString path
-    cond <- fromJSBool <$> available jspath
-    if  cond
-      then do
-        Just . fromJSString <$> get jspath
-      else do
-        return Nothing
+  maybeReadFile path = do
+    storage <- ask
+    return $ HashMap.lookup path storage
 
 htmlError :: String
 htmlError = "<span class='error'>error: </span>"
@@ -90,23 +92,26 @@ htmlASTErrors (NoSuchFile path renderState) = do
 
 main = do
   onloadCallback <- syncCallback AlwaysRetain True $ do
-    isFirst <- newIORef True
     editor <- initEditor
     button <- getElementById (toJSString "render")
     view <- getElementById (toJSString "view")
+
+    maybeLib <- fromJSRef =<< parseJSON <$> get (toJSString "lib.json")
+    let { libStorage = case maybeLib of
+                          Just libJSON ->
+                            case libJSON of
+                              Aeson.Object libObj -> HashMap.fromList $ map (\(k, (Aeson.String v)) -> (Text.unpack k, Text.unpack v)) $ HashMap.toList libObj
+                              _ -> HashMap.empty
+                          _ -> HashMap.empty }
+
     onclickCallback <- syncCallback AlwaysRetain True $ do
-      isFirst' <- readIORef isFirst
-      if isFirst'
-        then do
-          writeIORef isFirst False
-          setInnerHTML (toJSString "Please wait 2 seconds :)") view
-        else do
-          setInnerHTML (toJSString "少女 rendering...") view
+      setInnerHTML (toJSString "少女 rendering...") view
       val <- getValue editor
-      rendered <- runJavaScriptStorage $ renderString $ fromJSString val
+      rendered <- runJavaScriptStorage (renderString (fromJSString val)) libStorage
       let s = renderedToString rendered
       let err = htmlASTErrors rendered
       setInnerHTML (toJSString (err ++ s)) view
+      return ()
 
     onclick onclickCallback button
   onload onloadCallback
