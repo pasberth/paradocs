@@ -50,12 +50,16 @@ appendRendered rendered = do
   workingStructure %= (rendered:)
 
 appendString :: Monad m => String -> RendererT m ()
-appendString str = do
-  appendRendered $ Text str
+appendString s = do
+  workingStructure %= \case
+    (Text s':xs) -> Text (reverse s ++ s'):xs
+    xs -> Text (reverse s):xs
 
 appendChar :: Monad m => Char -> RendererT m ()
 appendChar ch = do
-  appendRendered $ Text [ch]
+  workingStructure %= \case
+    (Text s:xs) -> Text (ch:s):xs
+    xs -> Text [ch]:xs
 
 warning :: Monad m => String -> RendererT m ()
 warning msg = do

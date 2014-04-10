@@ -82,7 +82,7 @@ stepPosition string renderState = do
                   & workingFile . sourceLine .~ newSourceLine
 
 renderedToString :: Rendered -> String
-renderedToString (Text s) = s
+renderedToString (Text s) = reverse s
 renderedToString (Structure st) = join $ map renderedToString st--dropSpaces where
   --dropSpaces = reverse $ dropWhile isBlank $ reverse $ dropWhile isBlank st
   --isBlank (Blank _) = True
