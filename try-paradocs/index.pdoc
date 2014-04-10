@@ -31,7 +31,7 @@ h$main(h$mainZCMainzimain);
 
 %""
 <textarea id="input">
-%include lib/stdhtml.pdoc
+%include stdhtml.pdoc
 %block
 %ul
 - *bold*
