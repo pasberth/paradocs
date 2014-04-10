@@ -3,7 +3,7 @@ code size summary per package:
 aeson-0.7.0.2:           17488
 ansi-terminal-0.6.1.1:   14174
 ansi-wl-pprint-0.6.7.1:  42686
-base:                    655541
+base:                    653751
 comonad-4.0.1:           1369
 contravariant-0.4.4:     774
 control-bool-0.2.1:      1857
@@ -17,13 +17,13 @@ ghcjs-prim:              7912
 hashable-1.2.1.0:        4228
 integer-gmp:             38735
 lens-4.1.2:              18885
-main:                    443850
+main:                    447351
 mtl-2.1.3.1:             5542
 profunctors-4.0.3:       12750
 scientific-0.2.0.2:      7256
 split-0.2.2:             27935
 text-1.1.0.1:            4930
-transformers-0.3.0.0:    43526
+transformers-0.3.0.0:    43536
 unordered-containers-0.2.3.3:93060
 vector-0.10.9.1:         2965
 void-0.6.1:              837
@@ -42,7 +42,7 @@ ansi-wl-pprint-0.6.7.1
     Text.PrettyPrint.ANSI.Leijen:       42686
 
 base
-    Control.Applicative:                15936
+    Control.Applicative:                13997
     Control.Arrow:                      10016
     Control.Category:                   1199
     Control.Exception.Base:             15359
@@ -82,7 +82,7 @@ base
     GHC.IO.Encoding.Latin1:             4023
     GHC.IO.Encoding.Types:              2036
     GHC.IO.Encoding.UTF8:               63456
-    GHC.IO.Exception:                   33517
+    GHC.IO.Exception:                   33666
     GHC.IO.FD:                          56888
     GHC.IO.Handle:                      805
     GHC.IO.Handle.FD:                   15749
@@ -162,15 +162,15 @@ lens-4.1.2
 
 main
     Language.Paradocs.File:             17581
-    Language.Paradocs.MonadStorage:     9523
+    Language.Paradocs.MonadStorage:     19826
     Language.Paradocs.PrettyPrint:      17090
-    Language.Paradocs.Renderer:         238429
-    Language.Paradocs.RendererState:    50528
+    Language.Paradocs.Renderer:         240899
+    Language.Paradocs.RendererState:    50580
     Language.Paradocs.Rule:             15919
     Language.Paradocs.RuleEnv:          8403
     Language.Paradocs.RuleName:         179
     Language.Paradocs.Token:            52193
-    Main:                               34005
+    Main:                               24681
 
 mtl-2.1.3.1
     Control.Monad.Reader.Class:         2419
@@ -194,7 +194,7 @@ text-1.1.0.1
 
 transformers-0.3.0.0
     Control.Monad.Trans.Class:          271
-    Control.Monad.Trans.Reader:         12986
+    Control.Monad.Trans.Reader:         12996
     Control.Monad.Trans.State.Lazy:     18678
     Data.Functor.Identity:              11591
 
@@ -214,5 +214,5 @@ void-0.6.1
 
 
 
-packed metadata: 231430
+packed metadata: 231583
 
