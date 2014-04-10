@@ -23,7 +23,6 @@ library
     , mtl
     , lens
     , control-bool
-    --, free-operational
     , control-monad-loop
     , hashable
     , unordered-containers

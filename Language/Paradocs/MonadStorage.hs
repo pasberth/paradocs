@@ -8,8 +8,7 @@ module Language.Paradocs.MonadStorage where
 
 import           Prelude                            hiding (lookup)
 import           Control.Applicative
---import           Control.Monad.Operational.Simple
-import           Control.Monad.Identity
+import           Control.Monad.Reader
 import           Control.Bool
 import qualified Data.Hashable                      as Hashable
 import qualified Data.HashMap.Strict                as HashMap
@@ -28,23 +27,15 @@ instance MonadStorage IO where
 instance MonadStorage (HashMapStorage String String) where
   maybeReadFile = lookup
 
-data HashMapStorageAction k v a where
-  Lookup :: k -> HashMapStorageAction k v (Maybe v)
-
---newtype HashMapStorage k v a
---  = HashMapStorage (Program (HashMapStorageAction k v) a)
---  deriving (Functor, Monad, Operational (HashMapStorageAction k v))
-
 newtype HashMapStorage k v a
-  = HashMapStorage (Identity a)
-  deriving (Functor, Monad, Applicative)
+    = HashMapStorage
+      {
+        unHashMapStorage :: (Reader (HashMap.HashMap k v) a)
+      }
+    deriving (Functor, Applicative, Monad, MonadReader (HashMap.HashMap k v))
 
 lookup :: (Eq k, Hashable.Hashable k) => k -> HashMapStorage k v (Maybe v)
---lookup = singleton . Lookup
-lookup = undefined
+lookup k = HashMap.lookup k <$> ask
 
 runHashMapStorage :: forall k v a. (Eq k, Hashable.Hashable k) => HashMapStorage k v a -> HashMap.HashMap k v -> a
---runHashMapStorage (HashMapStorage program) storage = runIdentity $ interpret f program where
---  f :: forall x. HashMapStorageAction k v x -> Identity x
---  f (Lookup k) = return (HashMap.lookup k storage)
-runHashMapStorage = undefined
+runHashMapStorage = runReader  . unHashMapStorage
