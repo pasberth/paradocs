@@ -30,6 +30,8 @@ foreign import javascript unsafe "$1.doc.getValue()" getValue :: (JSRef Editor) 
 foreign import javascript unsafe "var req=new XMLHttpRequest();req.open('GET',$1,false);req.send();$r = req.responseText;" get :: JSString -> IO JSString
 foreign import javascript unsafe "$2.innerHTML = $1" setInnerHTML :: JSString -> (JSRef DOM) -> IO ()
 foreign import javascript unsafe "JSON.parse($1)" parseJSON :: JSString -> JSRef Aeson.Value
+foreign import javascript unsafe "NProgress.start()" startNProgress :: IO ()
+foreign import javascript unsafe "NProgress.done()" doneNProgress :: IO ()
 
 htmlError :: String
 htmlError = "<span class='error'>error: </span>"
@@ -76,7 +78,8 @@ htmlASTErrors (NoSuchFile path renderState) = do
   htmlMessage ("no such file `" ++ path ++ "'") htmlError renderState
 
 main = do
-  onloadCallback <- syncCallback AlwaysRetain True $ do
+  onloadCallback <- asyncCallback AlwaysRetain $ do
+    startNProgress
     editor <- initEditor
     button <- getElementById (toJSString "render")
     view <- getElementById (toJSString "view")
@@ -89,14 +92,15 @@ main = do
                               _ -> HashMap.empty
                           _ -> HashMap.empty }
 
-    onclickCallback <- syncCallback AlwaysRetain True $ do
-      setInnerHTML (toJSString "少女 rendering...") view
+    onclickCallback <- asyncCallback AlwaysRetain $ do
+      startNProgress
       val <- getValue editor
       let rendered = runHashMapStorage (renderString (fromJSString val)) libStorage
       let s = renderedToString rendered
       let err = htmlASTErrors rendered
       setInnerHTML (toJSString (err ++ s)) view
-      return ()
+      doneNProgress
 
     onclick onclickCallback button
+    doneNProgress
   onload onloadCallback

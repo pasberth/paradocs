@@ -2,6 +2,12 @@
 
 %html
 %head
+
+%""
+<script src="static/jquery-2.1.0.min.js"></script>
+<script src="static/nprogress.js"></script>
+<link rel="stylesheet" href="static/nprogress.css">
+""
 %""<script src="try-paradocs.jsexe/all.js"></script>""
 %"""
 <link rel="stylesheet" href="static/purecss/pure-min.css">
