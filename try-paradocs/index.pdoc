@@ -3,17 +3,16 @@
 %html
 %head
 
-%""
-<script src="static/jquery-2.1.0.min.js"></script>
-<script src="static/nprogress.js"></script>
-<link rel="stylesheet" href="static/nprogress.css">
-""
-%""<script src="try-paradocs.jsexe/all.js"></script>""
 %"""
 <link rel="stylesheet" href="static/purecss/pure-min.css">
 <link rel="stylesheet" href="static/codemirror-4.0/lib/codemirror.css">
+<link rel="stylesheet" href="static/nprogress.css">
 <script src="static/codemirror-4.0/lib/codemirror.js"></script>
+<script src="static/jquery-2.1.0.min.js"></script>
+<script src="static/nprogress.js"></script>
+<script src="try-paradocs.jsexe/all.js"></script>
 """
+
 %style"""
 .error {
   color: red;
