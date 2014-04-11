@@ -17,6 +17,7 @@ import           Control.Monad.State
 import           Control.Monad.Trans.Loop
 import           Control.Lens
 import           Control.Bool
+import qualified Data.Maybe                     as Maybe
 import qualified Data.Char                      as Char
 import qualified Data.HashMap.Strict            as HashMap
 import           Language.Paradocs.Types
@@ -490,19 +491,28 @@ renderIncludeInstruction = do
   directory <- use (workingFile . sourcePath) >>= return . maybe "./" FilePath.dropFileName
   let path = FilePath.normalise $ FilePath.combine directory relativePathStr
 
+  cycleChecking <- uses fileStack (^.. each . stackCallFile . sourcePath)
+
   forM_ (instructionToken:blank) $ \_ -> dropToken
-  lift (MonadStorage.maybeReadFile path) >>= \case
-    Just contents -> do
-      let file = File.empty & sourceCode .~ contents
-                            & sourceLine .~ head (lines contents)
-                            & sourcePath ?~ path
-                            & sourceTokens .~ Token.tokenize contents
-      forM_ relativePath $ \_ -> dropToken
-      openFile file
-    Nothing -> do
+
+  if path `elem` (Maybe.catMaybes cycleChecking)
+    then do
       workingFile . sourceToken .= join (map Token.toString relativePath)
-      noSuchFile path
+      failure "cyclic including detected"
       forM_ relativePath $ \_ -> dropToken
+    else do
+      lift (MonadStorage.maybeReadFile path) >>= \case
+        Just contents -> do
+          let file = File.empty & sourceCode .~ contents
+                                & sourceLine .~ head (lines contents)
+                                & sourcePath ?~ path
+                                & sourceTokens .~ Token.tokenize contents
+          forM_ relativePath $ \_ -> dropToken
+          openFile file
+        Nothing -> do
+          workingFile . sourceToken .= join (map Token.toString relativePath)
+          noSuchFile path
+          forM_ relativePath $ \_ -> dropToken
 
 renderReadInstruction :: MonadStorage m => RendererT m ()
 renderReadInstruction = do
