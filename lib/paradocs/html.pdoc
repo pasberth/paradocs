@@ -6,5 +6,6 @@
 %highlightjs
 %initHighlightingOnLoad
 %haskell
+%paradocs
 %github.css
 %body

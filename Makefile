@@ -1,7 +1,18 @@
+.SECONDEXPANSION:
+
 GHCJS=ghcjs
 PARADOCS=paradocs
 
-gh-pages: gh-pages/try-paradocs
+gh-pages: gh-pages/static \
+			gh-pages/doc/lib/index.html \
+			gh-pages/try-paradocs \
+			$(patsubst lib/%.pdoc, gh-pages/doc/lib/%.html, $(shell find lib -not -type d))
+
+gh-pages/static: gh-pages/static/highlightjs/paradocs.js
+
+gh-pages/static/highlightjs/paradocs.js: misc/paradocs.js
+	mkdir -p gh-pages/static/highlightjs
+	cp $^ $@
 
 gh-pages/try-paradocs: gh-pages/try-paradocs/index.html gh-pages/try-paradocs/try-paradocs.jsexe gh-pages/try-paradocs/lib.json gh-pages/try-paradocs/static
 
@@ -53,3 +64,14 @@ gh-pages/try-paradocs/static/nprogress.js:
 gh-pages/try-paradocs/static/nprogress.css:
 	mkdir -p gh-pages/try-paradocs/static
 	cd gh-pages/try-paradocs/static && wget http://ricostacruz.com/nprogress/nprogress.css
+
+gh-pages/doc/lib/index.html: doc/lib/index.pdoc
+	$(PARADOCS) $^ > $@
+
+gh-pages/doc/lib/%.html: lib/%.pdoc
+	mkdir -p $(shell dirname $@)
+	echo '%include lib/paradocs/html.pdoc' > libdoc.pdoc
+	echo '=' $^ >> libdoc.pdoc
+	echo >> libdoc.pdoc
+	echo '%pre%paradocs%read' $^ >> libdoc.pdoc
+	$(PARADOCS) libdoc.pdoc > $@

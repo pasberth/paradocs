@@ -1,0 +1,21 @@
+%include ../../lib/paradocs/html.pdoc
+
+= Paradocs Libraries
+
+== stdhtml
+
+%ul
+- `stdhtml.html`stdhtml.pdoc`
+- `stdhtml/inline.html`stdhtml/inline.pdoc`
+- `stdhtml/block.html`stdhtml/block.pdoc`
+- `stdhtml/block/code\-frame.html`stdhtml/block/code\-frame.pdoc`
+- `stdhtml/block/frame.html`stdhtml/block/frame.pdoc`
+- `stdhtml/block/pre.html`stdhtml/block/pre.pdoc`
+- `stdhtml/block/table.html`stdhtml/block/table.pdoc`
+- `stdhtml/block/ul.html`stdhtml/block/ul.pdoc`
+- `stdhtml/section.html`stdhtml/section.pdoc`
+- `stdhtml/html.html`stdhtml/html.pdoc`
+- `stdhtml/html/body.html`stdhtml/html/body.pdoc`
+- `stdhtml/html/head.html`stdhtml/html/head.pdoc`
+- `stdhtml/styles.html`stdhtml/styles.pdoc`
+- `stdhtml/highlightjs.html`stdhtml/highlightjs.pdoc`

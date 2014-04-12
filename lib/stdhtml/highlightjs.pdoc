@@ -631,3 +631,11 @@
   %extend inline
   %before %""<code class="xml language-xml">""
   %after %"</code>"
+
+%rule html head highlightjs paradocs
+  %before %""<script src="http://pasberth.github.io/paradocs/static/highlightjs/paradocs.js"></script>""
+
+%rule block pre paradocs
+  %extend inline
+  %before %""<code class="paradocs language-paradocs">""
+  %after %"</code>"
