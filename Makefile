@@ -18,6 +18,7 @@ gh-pages/try-paradocs/lib.json: try-paradocs/mklibjson.rb $(shell git ls-files l
 gh-pages/try-paradocs/static: gh-pages/try-paradocs/static/pure-min.css \
 								gh-pages/try-paradocs/static/codemirror.js \
 								gh-pages/try-paradocs/static/codemirror.css \
+								gh-pages/try-paradocs/static/paradocs-mode.js \
 								gh-pages/try-paradocs/static/jquery-2.1.0.min.js \
 	 							gh-pages/try-paradocs/static/nprogress.js \
 	 							gh-pages/try-paradocs/static/nprogress.css
@@ -37,6 +38,9 @@ gh-pages/try-paradocs/static/codemirror.js: /tmp/codemirror-4.0
 gh-pages/try-paradocs/static/codemirror.css: /tmp/codemirror-4.0
 	mkdir -p gh-pages/try-paradocs/static
 	cp /tmp/codemirror-4.0/lib/codemirror.css gh-pages/try-paradocs/static/codemirror.css
+
+gh-pages/try-paradocs/static/paradocs-mode.js: misc/paradocs-mode.js
+	cp $^ $@
 
 gh-pages/try-paradocs/static/jquery-2.1.0.min.js:
 	mkdir -p gh-pages/try-paradocs/static

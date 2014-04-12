@@ -23,7 +23,7 @@ data DOM
 data Editor
 
 foreign import javascript unsafe "window.onload = $1" onload :: (JSFun (IO a)) -> IO ()
-foreign import javascript unsafe "CodeMirror.fromTextArea(document.getElementById('input'), { lineNumbers: true, lineWrapping: true })" initEditor :: IO (JSRef Editor)
+foreign import javascript unsafe "CodeMirror.fromTextArea(document.getElementById('input'), { lineNumbers: true, lineWrapping: true, mode: 'paradocs' })" initEditor :: IO (JSRef Editor)
 foreign import javascript unsafe "document.getElementById($1)" getElementById :: JSString -> IO (JSRef DOM)
 foreign import javascript unsafe "$2.onclick = $1" onclick :: (JSFun (IO a)) -> (JSRef DOM) -> IO ()
 foreign import javascript unsafe "$1.doc.getValue()" getValue :: (JSRef Editor) -> IO JSString
