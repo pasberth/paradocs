@@ -1,0 +1,114 @@
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html><html>
+<head>
+<style type="text/css"> body {
+  color: #505050;
+  background-color: white;
+  font-family: Helvetica, arial, sans-serif;
+}
+
+a {
+  color: #4183C4;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.sect1 {
+  max-width: 62.5em;
+  margin: 0 auto 0;
+}
+
+h2 {
+  border-bottom: 1px solid #cccccc;
+}
+
+p {
+  line-height: 1.6;
+}
+
+pre, code {
+  font-family: "Source Code Pro", "Bitstream Vera Sans Mono", "Consolas", "Liberation Mono", Courier, monospace;
+}
+
+pre {
+  background-color: #fbfbfb;
+  padding: 0.46em 0.76em;
+  border: 1px solid silver;
+  border-radius: 0.25em;
+  overflow: auto;
+}
+
+:not(pre) > code {
+  background-color: #fbfbfb;
+  padding: 0 0.25em;
+  border: 1px solid silver;
+  border-radius: 0.25em;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+table th, table td {
+  padding: 0.46em 0.76em;
+  border: 1px solid silver;
+}
+
+.frame {
+  margin: 0;
+  padding: 0;
+  border: 1px solid silver;
+  border-radius: 0.25em;
+}
+
+.frame .title {
+  display: inline-block;
+  margin: 0;
+  padding: 0.25em 0.5em;
+  border-right: 1px solid silver;
+  border-bottom: 1px solid silver;
+  border-bottom-right-radius: 0.25em;
+}
+
+.frame .content {
+  margin: 0;
+  padding: 0 0.5em;
+}
+
+.code-frame {
+  background-color: #fbfbfb;
+}
+
+.code-frame .title {
+  background-color: #f8f8f8;
+}
+
+.code-frame .content pre {
+  padding: 0;
+  border-style: none;
+}
+
+.hljs {
+  background-color: #fbfbfb !important;
+}
+</style><script src="http://yandex.st/highlightjs/8.0/highlight.min.js"></script>
+<script type="text/javascript">hljs.initHighlightingOnLoad();</script>
+<script src="http://yandex.st/highlightjs/8.0/languages/haskell.min.js"></script>
+<script src="http://pasberth.github.io/paradocs/static/highlightjs/paradocs.js"></script>
+<link rel="stylesheet" href="http://yandex.st/highlightjs/8.0/styles/github.min.css">
+</head><body>
+<div class="sect1"> <h1> lib/stdhtml/section.pdoc</h1><p></p><pre><code class="paradocs language-paradocs">%rule&nbsp;section&#10;&nbsp;&nbsp;%extend&nbsp;inline&#10;&nbsp;&nbsp;%extend&nbsp;block&#10;&#10;%rule&nbsp;section&nbsp;paragraph&#10;&nbsp;&nbsp;%extend&nbsp;inline&#10;&nbsp;&nbsp;%before&nbsp;%"&lt;p&gt;"&#10;&nbsp;&nbsp;%after&nbsp;%"&lt;/p&gt;"&#10;&#10;%rule&nbsp;sections&#10;&nbsp;&nbsp;%def&nbsp;=&nbsp;%sect1&nbsp;%h1&#10;&#10;%rule&nbsp;sections&nbsp;sect1&#10;&nbsp;&nbsp;%extend&nbsp;section&#10;&nbsp;&nbsp;%before&nbsp;%""&lt;div&nbsp;class="sect1"&gt;""&#10;&nbsp;&nbsp;%after&nbsp;%""&lt;/div&gt;""&#10;&nbsp;&nbsp;%def&nbsp;==&nbsp;%sect2%h2&#10;&#10;%rule&nbsp;sections&nbsp;sect1&nbsp;h1&#10;&nbsp;&nbsp;%extend&nbsp;inline&#10;&nbsp;&nbsp;%before&nbsp;%"&lt;h1&gt;"&#10;&nbsp;&nbsp;%after&nbsp;%"&lt;/h1&gt;"&#10;&#10;%rule&nbsp;sections&nbsp;sect1&nbsp;sect2&#10;&nbsp;&nbsp;%extend&nbsp;section&#10;&nbsp;&nbsp;%before&nbsp;%""&lt;div&nbsp;class="sect2"&gt;""&#10;&nbsp;&nbsp;%after&nbsp;%""&lt;/div&gt;""&#10;&nbsp;&nbsp;%def&nbsp;===&nbsp;%sect3%h3&#10;&#10;%rule&nbsp;sections&nbsp;sect1&nbsp;sect2&nbsp;h2&#10;&nbsp;&nbsp;%extend&nbsp;inline&#10;&nbsp;&nbsp;%before&nbsp;%"&lt;h2&gt;"&#10;&nbsp;&nbsp;%after&nbsp;%"&lt;/h2&gt;"&#10;&#10;%rule&nbsp;sections&nbsp;sect1&nbsp;sect2&nbsp;sect3&#10;&nbsp;&nbsp;%extend&nbsp;section&#10;&nbsp;&nbsp;%before&nbsp;%""&lt;div&nbsp;class="sect3"&gt;""&#10;&nbsp;&nbsp;%after&nbsp;%""&lt;/div&gt;""&#10;&nbsp;&nbsp;%def&nbsp;====&nbsp;%sect4%h4&#10;&#10;%rule&nbsp;sections&nbsp;sect1&nbsp;sect2&nbsp;sect3&nbsp;h3&#10;&nbsp;&nbsp;%extend&nbsp;inline&#10;&nbsp;&nbsp;%before&nbsp;%"&lt;h3&gt;"&#10;&nbsp;&nbsp;%after&nbsp;%"&lt;/h3&gt;"&#10;&#10;%rule&nbsp;sections&nbsp;sect1&nbsp;sect2&nbsp;sect3&nbsp;sect4&#10;&nbsp;&nbsp;%extend&nbsp;section&#10;&nbsp;&nbsp;%before&nbsp;%""&lt;div&nbsp;class="sect4"&gt;""&#10;&nbsp;&nbsp;%after&nbsp;%"&lt;/div&gt;"&#10;&nbsp;&nbsp;%def&nbsp;====&nbsp;%sect4%h4&#10;&#10;%rule&nbsp;sections&nbsp;sect1&nbsp;sect2&nbsp;sect3&nbsp;sect4&nbsp;h4&#10;&nbsp;&nbsp;%extend&nbsp;inline&#10;&nbsp;&nbsp;%before&nbsp;%"&lt;h4&gt;"&#10;&nbsp;&nbsp;%after&nbsp;%"&lt;/h4&gt;"&#10;&#10;%rule&nbsp;sections&nbsp;sect1&nbsp;sect2&nbsp;sect3&nbsp;sect4&nbsp;sect5&#10;&nbsp;&nbsp;%extend&nbsp;section&#10;&nbsp;&nbsp;%before&nbsp;%""&lt;div&nbsp;class="sect5"&gt;""&#10;&nbsp;&nbsp;%after&nbsp;%""&lt;/div&gt;""&#10;&nbsp;&nbsp;%def&nbsp;=====&nbsp;%sect5%h5&#10;&#10;%rule&nbsp;sections&nbsp;sect1&nbsp;sect2&nbsp;sect3&nbsp;sect4&nbsp;sect5&nbsp;h5&#10;&nbsp;&nbsp;%extend&nbsp;inline&#10;&nbsp;&nbsp;%before&nbsp;%"&lt;h5&gt;"&#10;&nbsp;&nbsp;%after&nbsp;%"&lt;/h5&gt;"&#10;&#10;%rule&nbsp;sections&nbsp;sect1&nbsp;sect2&nbsp;sect3&nbsp;sect4&nbsp;sect5&nbsp;sect6&#10;&nbsp;&nbsp;%extend&nbsp;section&#10;&nbsp;&nbsp;%before&nbsp;%""&lt;div&nbsp;class="sect6"&gt;""&#10;&nbsp;&nbsp;%after&nbsp;%"&lt;/div&gt;"&#10;&#10;%rule&nbsp;sections&nbsp;sect1&nbsp;sect2&nbsp;sect3&nbsp;sect4&nbsp;sect5&nbsp;sect6&nbsp;h6&#10;&nbsp;&nbsp;%extend&nbsp;inline&#10;&nbsp;&nbsp;%before&nbsp;%"&lt;h6&gt;"&#10;&nbsp;&nbsp;%after&nbsp;%"&lt;/h6&gt;"&#10;
+</code></pre></div></body></html>
