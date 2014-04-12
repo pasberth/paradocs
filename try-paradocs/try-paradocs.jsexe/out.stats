@@ -17,7 +17,7 @@ ghcjs-prim:              7912
 hashable-1.2.1.0:        4228
 integer-gmp:             38735
 lens-4.1.2:              18885
-main:                    451686
+main:                    451774
 mtl-2.1.3.1:             5542
 profunctors-4.0.3:       12750
 scientific-0.2.0.2:      7256
@@ -170,7 +170,7 @@ main
     Language.Paradocs.RuleEnv:          8403
     Language.Paradocs.RuleName:         179
     Language.Paradocs.Token:            52193
-    Main:                               24647
+    Main:                               24735
 
 mtl-2.1.3.1
     Control.Monad.Reader.Class:         2419
