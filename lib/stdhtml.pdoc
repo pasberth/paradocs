@@ -4,3 +4,4 @@
 %include stdhtml/html.pdoc
 %include stdhtml/styles.pdoc
 %include stdhtml/highlightjs.pdoc
+%include stdhtml/toc.pdoc

@@ -1,0 +1,39 @@
+%rule section toc
+  %before %""<div class="toc"></div>""
+
+%rule html head mktoc
+  %before %"""
+<script type="text/javascript">
+window.addEventListener("load", function () {
+  var listHeaders = function (obj, idPrefix) {
+    var headerCount = 0;
+    var lists = [];
+    while (obj) {
+      if (obj.nodeName === "#text")
+        ;
+      else if (/^sect/.test(obj.getAttribute("class"))) {
+        var header = obj.querySelector("h1, h2, h3, h4, h5, h6");
+        if (header) {
+          ++headerCount;
+          var headerId = header.getAttribute("id");
+          if (!headerId) {
+            headerId = idPrefix + headerCount;
+            header.setAttribute("id", headerId);
+          }
+          lists.push("<li><a href='#" + headerId + "'>" + header.innerHTML + "</a></li>");
+          lists.push(listHeaders(header, headerId + "_"));
+        }
+      }
+      obj = obj.nextSibling;
+    }
+    return "<ul>" + lists.join('') + "</ul>";
+  }
+
+  var all = document.querySelectorAll(".toc");
+  for (var i = 0; i < all.length; ++i) {
+    var toc = all[i];
+    toc.innerHTML = listHeaders(toc, "_");
+  }
+});
+</script>
+"""

@@ -39,6 +39,7 @@
 %body
 
 = Paradocs cheatsheet
+%toc
 
 == Formatted Text
 
