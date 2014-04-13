@@ -25,6 +25,7 @@
 
 %html
 %head
+%mktoc
 :simple.css:
 %style
 """
