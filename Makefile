@@ -4,6 +4,8 @@ GHCJS=ghcjs
 PARADOCS=paradocs
 
 gh-pages: gh-pages/static \
+			gh-pages/doc/cheatsheet.html \
+			gh-pages/doc/cheatsheet/hello.pdoc \
 			gh-pages/doc/lib/index.html \
 			gh-pages/try-paradocs \
 			$(patsubst lib/%.pdoc, gh-pages/doc/lib/%.html, $(shell find lib -not -type d))
@@ -64,6 +66,13 @@ gh-pages/try-paradocs/static/nprogress.js:
 gh-pages/try-paradocs/static/nprogress.css:
 	mkdir -p gh-pages/try-paradocs/static
 	cd gh-pages/try-paradocs/static && wget http://ricostacruz.com/nprogress/nprogress.css
+
+gh-pages/doc/cheatsheet.html: doc/cheatsheet.pdoc
+	$(PARADOCS) $^ > $@
+
+gh-pages/doc/cheatsheet/hello.pdoc: doc/cheatsheet/hello.pdoc
+	mkdir -p $(shell dirname $@)
+	cp $^ $@
 
 gh-pages/doc/lib/index.html: doc/lib/index.pdoc
 	$(PARADOCS) $^ > $@
