@@ -1,0 +1,189 @@
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html><html>
+<head>
+
+<script type="text/javascript">
+window.addEventListener("load", function () {
+  var listHeaders = function (obj, idPrefix) {
+    var headerCount = 0;
+    var lists = [];
+    while (obj) {
+      if (obj.nodeName === "#text")
+        ;
+      else if (/^sect/.test(obj.getAttribute("class"))) {
+        var header = obj.querySelector("h1, h2, h3, h4, h5, h6");
+        if (header) {
+          ++headerCount;
+          var headerId = header.getAttribute("id");
+          if (!headerId) {
+            headerId = idPrefix + headerCount;
+            header.setAttribute("id", headerId);
+          }
+          lists.push("<li><a href='#" + headerId + "'>" + header.innerHTML + "</a></li>");
+          lists.push(listHeaders(header, headerId + "_"));
+        }
+      }
+      obj = obj.nextSibling;
+    }
+    return "<ul>" + lists.join('') + "</ul>";
+  }
+
+  var all = document.querySelectorAll(".toc");
+  for (var i = 0; i < all.length; ++i) {
+    var toc = all[i];
+    toc.innerHTML = listHeaders(toc, "_");
+  }
+});
+</script>
+
+<style type="text/css"> body {
+  color: #505050;
+  background-color: white;
+  font-family: Helvetica, arial, sans-serif;
+}
+
+a {
+  color: #4183C4;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.sect1 {
+  max-width: 62.5em;
+  margin: 0 auto 0;
+}
+
+h2 {
+  border-bottom: 1px solid #cccccc;
+}
+
+p {
+  line-height: 1.6;
+}
+
+pre, code {
+  font-family: "Source Code Pro", "Bitstream Vera Sans Mono", "Consolas", "Liberation Mono", Courier, monospace;
+}
+
+pre {
+  background-color: #fbfbfb;
+  padding: 0.46em 0.76em;
+  border: 1px solid silver;
+  border-radius: 0.25em;
+  overflow: auto;
+}
+
+:not(pre) > code {
+  background-color: #fbfbfb;
+  padding: 0 0.25em;
+  border: 1px solid silver;
+  border-radius: 0.25em;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+table th, table td {
+  padding: 0.46em 0.76em;
+  border: 1px solid silver;
+}
+
+.frame {
+  margin: 0;
+  padding: 0;
+  border: 1px solid silver;
+  border-radius: 0.25em;
+}
+
+.frame .title {
+  display: inline-block;
+  margin: 0;
+  padding: 0.25em 0.5em;
+  border-right: 1px solid silver;
+  border-bottom: 1px solid silver;
+  border-bottom-right-radius: 0.25em;
+}
+
+.frame .content {
+  margin: 0;
+  padding: 0 0.5em;
+}
+
+.code-frame {
+  background-color: #fbfbfb;
+}
+
+.code-frame .title {
+  background-color: #f8f8f8;
+}
+
+.code-frame .content pre {
+  padding: 0;
+  border-style: none;
+}
+
+.hljs {
+  background-color: #fbfbfb !important;
+}
+</style><style type="text/css">
+
+.cheatsheet {
+  width: 100%;
+}
+.left, .right {
+  width: 50%;
+  border-style: none;
+}
+
+</style></head><body><div class="sect1"> <h1> Paradocs cheatsheet
+</h1><div class="toc"></div><p></p><div class="sect2"><h2> Formatted Text</h2><p></p><table class="cheatsheet">
+<tr><td class="left"><code>*bold*</code></td><td class="right"><strong>bold</strong>
+</td></tr><tr> <td class="left"><code>_italic_</code></td><td class="right"><em>italic</em>
+</td></tr><tr> <td class="left"><code>+monospace+</code></td><td class="right"><code>monospace</code>
+</td></tr><tr> <td class="left"><code>super^script^</code></td><td class="right">super<sup>script</sup>
+</td></tr><tr> <td class="left"><code>sub~script~</code></td><td class="right">sub<sub>script</sub>
+</td></tr><tr> <td class="left"><code>*_bold&nbsp;italic_*</code></td><td class="right"><strong><em>bold italic</em></strong></td></tr></table><p></p></div><div class="sect2"><h2> Links</h2><p></p><table class="cheatsheet">
+<tr><td class="left"><code>`cheatsheet.html`here`</code></td><td class="right"><a href="cheatsheet.html">here</a></td></tr></table><p></p></div><div class="sect2"><h2> Read &amp; Include files</h2><p></p><div class="frame code-frame">
+<div class="title"> <a href="cheatsheet/hello.pdoc">cheatsheet/hello.pdoc</a>
+</div><div class="content"><pre>
+*hello*</pre></div></div><p></p><table class="cheatsheet">
+<tr><td class="left"><pre>%read&nbsp;cheatsheet/hello.pdoc</pre></td><td class="right">*hello*
+</td></tr><tr> <td class="left"><pre>%include&nbsp;cheatsheet/hello.pdoc</pre></td><td class="right"><strong>hello</strong></td></tr></table><p></p></div><div class="sect2"><h2> Lists</h2><p></p><table class="cheatsheet">
+<tr><td class="left"><pre>&#10;%ul&#10;-&nbsp;item&nbsp;1&#10;-&nbsp;item&nbsp;2&#10;-&nbsp;item&nbsp;3&#10;</pre></td><td class="right"><ul>
+<li> item 1
+</li><li> item 2
+</li><li> item 3</li></ul></td></tr></table><p></p></div><div class="sect2"><h2> Tables</h2><p></p><table class="cheatsheet">
+<tr><td class="left"><pre>&#10;%table&#10;=||column&nbsp;A|column&nbsp;B|column&nbsp;C&#10;.|row&nbsp;1|cell&nbsp;A1|cell&nbsp;B1|cell&nbsp;C1&#10;.|row&nbsp;2|cell&nbsp;A2|cell&nbsp;B2|cell&nbsp;C2&#10;.|row&nbsp;3|cell&nbsp;A3|cell&nbsp;B3|cell&nbsp;C3&#10;</pre></td><td class="right"><table>
+<thead> <tr><th></th><th>column A</th><th>column B</th><th>column C
+</th></tr></thead><tbody><tr><td>row 1</td><td>cell A1</td><td>cell B1</td><td>cell C1
+</td></tr><tr><td>row 2</td><td>cell A2</td><td>cell B2</td><td>cell C2
+</td></tr><tr><td>row 3</td><td>cell A3</td><td>cell B3</td><td>cell C3</td></tr></tbody></table></td></tr></table><p></p></div><div class="sect2"><h2> Quoting Text</h2><p></p><div class="sect3"><h3> Quoting macro characters</h3><p></p><table class="cheatsheet">
+<tr><td class="left"><pre>&#10;\*hello\*&#10;</pre></td><td class="right">*hello*
+</td></tr><tr> <td class="left"><pre>&#10;"*hello*"&#10;</pre></td><td class="right">*hello*
+</td></tr><tr> <td class="left"><pre>&#10;""&#10;*hello*&#10;""&#10;</pre></td><td class="right"><br />*hello*<br /></td></tr></table><p></p></div><div class="sect3"><h3> Quoting Linebreaks</h3><p></p><table class="cheatsheet">
+<tr><td class="left"><pre>&#10;first&nbsp;line.&nbsp;\&#10;next&nbsp;line.&#10;</pre></td><td class="right">first line. <br />next line.
+</td></tr><tr> <td class="left"><pre>&#10;""&#10;first&nbsp;line.&#10;next&nbsp;line.&#10;""&#10;</pre></td><td class="right"><br />first&nbsp;line.<br />next&nbsp;line.<br /></td></tr></table><p></p></div><div class="sect3"><h3> Quoting `\'</h3><p></p><table class="cheatsheet">
+<tr><td class="left"><pre>&#10;\\&#10;</pre></td><td class="right">\
+</td></tr><tr> <td class="left"><pre>&#10;"\\"&#10;</pre></td><td class="right">\</td></tr></table><p></p></div><div class="sect3"><h3> Quoting `"'</h3><p></p><table class="cheatsheet">
+<tr><td class="left"><pre>&#10;\"&#10;</pre></td><td class="right">"
+</td></tr><tr> <td class="left"><pre>&#10;"\""&#10;</pre></td><td class="right">"</td></tr></table><p></p></div></div><div class="sect2"><h2> Raw HTML</h2><p></p><table class="cheatsheet">
+<tr><td class="left"><pre>&#10;%"&lt;strong&gt;hello&lt;/strong&gt;"&#10;</pre></td><td class="right"><strong>hello</strong>
+</td></tr><tr> <td class="left"><pre>&#10;%""&#10;&lt;strong&gt;hello&lt;/strong&gt;&#10;""&#10;</pre></td><td class="right">
+<strong>hello</strong>
+
+</td></tr></table></div></div></body></html>

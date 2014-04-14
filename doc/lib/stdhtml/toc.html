@@ -1,0 +1,115 @@
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html><html>
+<head>
+<style type="text/css"> body {
+  color: #505050;
+  background-color: white;
+  font-family: Helvetica, arial, sans-serif;
+}
+
+a {
+  color: #4183C4;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.sect1 {
+  max-width: 62.5em;
+  margin: 0 auto 0;
+}
+
+h2 {
+  border-bottom: 1px solid #cccccc;
+}
+
+p {
+  line-height: 1.6;
+}
+
+pre, code {
+  font-family: "Source Code Pro", "Bitstream Vera Sans Mono", "Consolas", "Liberation Mono", Courier, monospace;
+}
+
+pre {
+  background-color: #fbfbfb;
+  padding: 0.46em 0.76em;
+  border: 1px solid silver;
+  border-radius: 0.25em;
+  overflow: auto;
+}
+
+:not(pre) > code {
+  background-color: #fbfbfb;
+  padding: 0 0.25em;
+  border: 1px solid silver;
+  border-radius: 0.25em;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+table th, table td {
+  padding: 0.46em 0.76em;
+  border: 1px solid silver;
+}
+
+.frame {
+  margin: 0;
+  padding: 0;
+  border: 1px solid silver;
+  border-radius: 0.25em;
+}
+
+.frame .title {
+  display: inline-block;
+  margin: 0;
+  padding: 0.25em 0.5em;
+  border-right: 1px solid silver;
+  border-bottom: 1px solid silver;
+  border-bottom-right-radius: 0.25em;
+}
+
+.frame .content {
+  margin: 0;
+  padding: 0 0.5em;
+}
+
+.code-frame {
+  background-color: #fbfbfb;
+}
+
+.code-frame .title {
+  background-color: #f8f8f8;
+}
+
+.code-frame .content pre {
+  padding: 0;
+  border-style: none;
+}
+
+.hljs {
+  background-color: #fbfbfb !important;
+}
+</style><script src="http://yandex.st/highlightjs/8.0/highlight.min.js"></script>
+<script type="text/javascript">hljs.initHighlightingOnLoad();</script>
+<script src="http://yandex.st/highlightjs/8.0/languages/haskell.min.js"></script>
+<script src="http://pasberth.github.io/paradocs/static/highlightjs/paradocs.js"></script>
+<link rel="stylesheet" href="http://yandex.st/highlightjs/8.0/styles/github.min.css">
+</head><body>
+<div class="sect1"> <h1> lib/stdhtml/toc.pdoc</h1><p></p><pre><code class="paradocs language-paradocs">%rule&nbsp;section&nbsp;toc&#10;&nbsp;&nbsp;%before&nbsp;%""&lt;div&nbsp;class="toc"&gt;&lt;/div&gt;""&#10;&#10;%rule&nbsp;html&nbsp;head&nbsp;mktoc&#10;&nbsp;&nbsp;%before&nbsp;%"""&#10;&lt;script&nbsp;type="text/javascript"&gt;&#10;window.addEventListener("load",&nbsp;function&nbsp;()&nbsp;{&#10;&nbsp;&nbsp;var&nbsp;listHeaders&nbsp;=&nbsp;function&nbsp;(obj,&nbsp;idPrefix)&nbsp;{&#10;&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;headerCount&nbsp;=&nbsp;0;&#10;&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;lists&nbsp;=&nbsp;[];&#10;&nbsp;&nbsp;&nbsp;&nbsp;while&nbsp;(obj)&nbsp;{&#10;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(obj.nodeName&nbsp;===&nbsp;"#text")&#10;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;&#10;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;if&nbsp;(/^sect/.test(obj.getAttribute("class")))&nbsp;{&#10;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;header&nbsp;=&nbsp;obj.querySelector("h1,&nbsp;h2,&nbsp;h3,&nbsp;h4,&nbsp;h5,&nbsp;h6");&#10;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(header)&nbsp;{&#10;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;++headerCount;&#10;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;headerId&nbsp;=&nbsp;header.getAttribute("id");&#10;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(!headerId)&nbsp;{&#10;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;headerId&nbsp;=&nbsp;idPrefix&nbsp;+&nbsp;headerCount;&#10;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;header.setAttribute("id",&nbsp;headerId);&#10;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&#10;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lists.push("&lt;li&gt;&lt;a&nbsp;href='#"&nbsp;+&nbsp;headerId&nbsp;+&nbsp;"'&gt;"&nbsp;+&nbsp;header.innerHTML&nbsp;+&nbsp;"&lt;/a&gt;&lt;/li&gt;");&#10;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lists.push(listHeaders(header,&nbsp;headerId&nbsp;+&nbsp;"_"));&#10;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&#10;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&#10;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;obj&nbsp;=&nbsp;obj.nextSibling;&#10;&nbsp;&nbsp;&nbsp;&nbsp;}&#10;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;"&lt;ul&gt;"&nbsp;+&nbsp;lists.join('')&nbsp;+&nbsp;"&lt;/ul&gt;";&#10;&nbsp;&nbsp;}&#10;&#10;&nbsp;&nbsp;var&nbsp;all&nbsp;=&nbsp;document.querySelectorAll(".toc");&#10;&nbsp;&nbsp;for&nbsp;(var&nbsp;i&nbsp;=&nbsp;0;&nbsp;i&nbsp;&lt;&nbsp;all.length;&nbsp;++i)&nbsp;{&#10;&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;toc&nbsp;=&nbsp;all[i];&#10;&nbsp;&nbsp;&nbsp;&nbsp;toc.innerHTML&nbsp;=&nbsp;listHeaders(toc,&nbsp;"_");&#10;&nbsp;&nbsp;}&#10;});&#10;&lt;/script&gt;&#10;"""
+</code></pre></div></body></html>
