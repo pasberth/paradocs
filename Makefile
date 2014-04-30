@@ -40,17 +40,17 @@ gh-pages/try-paradocs/static/pure-min.css:
 	mkdir -p gh-pages/try-paradocs/static
 	cd gh-pages/try-paradocs/static && wget http://yui.yahooapis.com/pure/0.4.2/pure-min.css
 
-/tmp/codemirror-4.0:
+/tmp/codemirror-4.1:
 	mkdir -p gh-pages/try-paradocs/static
 	cd /tmp && wget http://codemirror.net/codemirror.zip && unzip codemirror.zip
 
-gh-pages/try-paradocs/static/codemirror.js: /tmp/codemirror-4.0
+gh-pages/try-paradocs/static/codemirror.js: /tmp/codemirror-4.1
 	mkdir -p gh-pages/try-paradocs/static
-	cp /tmp/codemirror-4.0/lib/codemirror.js gh-pages/try-paradocs/static/codemirror.js
+	cp /tmp/codemirror-4.1/lib/codemirror.js gh-pages/try-paradocs/static/codemirror.js
 
-gh-pages/try-paradocs/static/codemirror.css: /tmp/codemirror-4.0
+gh-pages/try-paradocs/static/codemirror.css: /tmp/codemirror-4.1
 	mkdir -p gh-pages/try-paradocs/static
-	cp /tmp/codemirror-4.0/lib/codemirror.css gh-pages/try-paradocs/static/codemirror.css
+	cp /tmp/codemirror-4.1/lib/codemirror.css gh-pages/try-paradocs/static/codemirror.css
 
 gh-pages/try-paradocs/static/paradocs-mode.js: misc/paradocs-mode.js
 	cp $^ $@
