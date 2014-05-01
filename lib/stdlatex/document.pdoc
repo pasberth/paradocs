@@ -3,8 +3,9 @@
   %after %""\end{document}""
 
   %def = %title
-  %def == %section
-  %def === %subsection
+  %def == %chapter
+  %def === %section
+  %def ==== %subsection
 
 %rule latex document title
   %before %""\title{""
@@ -25,6 +26,10 @@
 
 %rule latex document toc
   %before %""\tableofcontents""
+
+%rule latex document chapter
+  %before %""\chapter{""
+  %after %""}""
 
 %rule latex document section
   %before %""\section{""
