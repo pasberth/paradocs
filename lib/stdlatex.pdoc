@@ -1,0 +1,4 @@
+%include stdlatex/inline.pdoc
+%include stdlatex/latex.pdoc
+%include stdlatex/documentclass.pdoc
+%include stdlatex/document.pdoc

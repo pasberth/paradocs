@@ -1,0 +1,41 @@
+%rule latex document
+  %before %""\begin{document}""
+  %after %""\end{document}""
+
+  %def = %title
+  %def == %section
+  %def === %subsection
+
+%rule latex document title
+  %before %""\title{""
+  %after %""}""
+
+%rule latex document author
+  %before %""\author{""
+  %after %""}""
+
+%rule latex document date
+  %before %""\date{""
+  %after %""}""
+%rule latex document date today
+  %before %""\today""
+
+%rule latex document maketitle
+  %before %""\maketitle""
+
+%rule latex document toc
+  %before %""\tableofcontents""
+
+%rule latex document section
+  %before %""\section{""
+  %after %""}""
+
+%rule latex document subsection
+  %before %""\subsection{""
+  %after %""}""
+
+%rule latex document paragraph
+  %extend inline
+  %before %""
+
+""

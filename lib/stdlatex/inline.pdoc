@@ -1,0 +1,54 @@
+%rule inline
+  %def * %inline-label %strong
+  %def _ %inline-label %em
+  %def + %inline-label %code
+  %def ^ %inline-label %sup
+  %def ~ %inline-label %sub
+  %def ` %inline-label %a
+
+%rule inline inline-break
+
+%rule inline inline-label
+
+%rule inline inline-label break
+
+%rule inline inline-label strong
+  %extend inline
+  %before %""{\bf ""
+  %after %"}"
+  %def * %break %inline-break
+
+%rule inline inline-label em
+  %extend inline
+  %before %""{\sl ""
+  %after %"}"
+  %def _ %break %inline-break
+
+%rule inline inline-label code
+  %extend inline
+  %before %""{\tt ""
+  %after %"}"
+  %def + %break %inline-break
+
+%rule inline inline-label sup
+  %extend inline
+  %before %"^{"
+  %after %"}"
+  %def ^ %break %inline-break
+
+%rule inline inline-label sub
+  %extend inline
+  %before %"_{"
+  %after %"}"
+  %def ~ %break %inline-break
+
+%rule inline inline-label a
+  %before %""\href{""
+  %after %"}"
+  %def ` %link-text
+
+%rule inline inline-label link-text
+  %extend inline
+  %before %"{"
+  %after %"}"
+  %def ` %break %inline-break

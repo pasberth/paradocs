@@ -1,0 +1,10 @@
+%rule latex jbook
+  %before %""\documentclass{jbook}""
+%rule latex jarticle
+  %before %""\documentclass{jarticle}""
+%rule latex jreport
+  %before %""\documentclass{jreport}""
+%rule latex letter
+  %before %""\documentclass{letter}""
+%rule latex tarticle
+  %before %""\documentclass{tarticle}""
