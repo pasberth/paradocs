@@ -3,9 +3,9 @@
   %after %""\end{document}""
 
   %def = %title
-  %def == %chapter
-  %def === %section
-  %def ==== %subsection
+  %def == %chapter %header
+  %def === %section %header
+  %def ==== %subsection %header
 
 %rule latex document title
   %before %""\title{""
@@ -28,18 +28,29 @@
   %before %""\tableofcontents""
 
 %rule latex document chapter
+%rule latex document chapter header
   %before %""\chapter{""
   %after %""}""
 
-%rule latex document section
+%rule latex document chapter paragraph
+  %extend inline
+  %before %""
+
+""
+%rule latex document chapter section
+%rule latex document chapter section header
   %before %""\section{""
   %after %""}""
+%rule latex document chapter section paragraph
+  %extend inline
+  %before %""
 
-%rule latex document subsection
+""
+%rule latex document chapter section subsection
+%rule latex document chapter section subsection header
   %before %""\subsection{""
   %after %""}""
-
-%rule latex document paragraph
+%rule latex document chapter section subsection paragraph
   %extend inline
   %before %""
 
